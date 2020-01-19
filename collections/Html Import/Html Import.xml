@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Collection name="Html Import" guid="{aa255960-cf4d-4a6e-a792-89a3d499a98f}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid="">
+	<HelpLink></HelpLink>
+	<Help></Help>
+	<Addon name="Html Import" guid="{81c8e16a-c661-4c59-921c-998c6acaa6bc}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<!-- deprecated --><ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.HtmlImport.Views.HtmlImportClass]]></DotNetClass>
+		<ArgumentList></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="50" height="50" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>Yes</BlockEditTools>
+		<AliasList></AliasList>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptInHead></JavascriptInHead>
+		<javascriptForceHead>No</javascriptForceHead>
+		<JSHeadScriptSrc></JSHeadScriptSrc>
+		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
+		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
+		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
+		<Content>No</Content>
+		<Template>No</Template>
+		<Email>No</Email>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<Diagnostic>No</Diagnostic>
+		<ProcessRunOnce>No</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles></Styles>
+		<styleslinkhref></styleslinkhref>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+	</Addon>
+</Collection>
