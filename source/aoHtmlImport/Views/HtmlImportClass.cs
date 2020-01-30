@@ -12,19 +12,31 @@ namespace Contensive.Addons.HtmlImport {
             public override object Execute(CPBaseClass cp) {
                 try {
                     string button = cp.Doc.GetText("button");
-                    if ( string.IsNullOrEmpty(button)) {
+                    string statusMessage = "";
+                    const string uploadFormInputName = "uploadFile";
+                    if (!string.IsNullOrEmpty(button)) {
                         //
                         // -- process button
+                        string uploadFile = "";
+                        string uploadFolder = cp.TempFiles.CreateUniqueFolder();
+                        if (!cp.TempFiles.SaveUpload(uploadFormInputName, uploadFolder, ref uploadFile)) {
+                            statusMessage = "Upload failed";
+                        } else {
+                            ImportController.importHtmlFile(cp, cp.TempFiles.PhysicalFilePath + uploadFolder + uploadFile, cp.Doc.GetText("layoutName"), cp.Doc.GetText("templateName"), ref statusMessage);
+                        }
                     }
                     //
                     // -- create output form
-                    //string result = cp.Html5.H2("Html Import");
-                    //result += cp.Html5.P("Upload an html file.");
-                    //result += cp.Html5.InputFile("uploadFilename", "custom-file-input", "customFile");
-                    string layout = cp.Content.getLayout("Html Import");
-                    layout = cp.Html5.Form(layout);
-                    var htmlImportViewModel = new HtmlImportViewModel();
-                    return Nustache.Core.Render.StringToString(layout, htmlImportViewModel);
+                    var form = cp.AdminUI.NewToolForm();
+                    form.Title = "Html Importer";
+                    form.Warning = (string.IsNullOrWhiteSpace(statusMessage) ? "" : statusMessage);
+                    form.Description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible templates and layouts. See reference at the end of this document.");
+                    form.Body += cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
+                    form.Body += cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutName", "Layouts"), "(Optional) Select the Layout you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.");
+                    form.Body += cp.AdminUI.GetEditRow("Select Template", cp.AdminUI.GetLookupContentEditor("templateName", "Page Templates"), "(Optional) Select the Page Template you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.","",false,true);
+                    form.AddFormButton("Upload");
+                    form.AddFormButton("Cancel");
+                    return form.GetHtml(cp);
                 } catch (Exception ex) {
                     //
                     // -- the execute method should typically not throw an error into the consuming method. Log and return.

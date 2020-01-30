@@ -2,12 +2,12 @@
 <Collection name="Html Import" guid="{aa255960-cf4d-4a6e-a792-89a3d499a98f}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid="">
 	<HelpLink></HelpLink>
 	<Help></Help>
-	<Addon name="Html Import" guid="{81c8e16a-c661-4c59-921c-998c6acaa6bc}" type="Add-on">
+	<Addon name="Html Import" guid="{81c8e16a-c661-4c59-921c-998c6acaa6bc}" type="Tool">
 		<Copy></Copy>
 		<CopyText></CopyText>
 		<!-- deprecated --><ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.HtmlImport.Views.HtmlImportClass]]></DotNetClass>
-		<ArgumentList></ArgumentList>
+		<ArgumentList><![CDATA[]]></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
 		<Help></Help>
@@ -42,6 +42,19 @@
 		<RemoteAssetLink></RemoteAssetLink>
 		<Styles></Styles>
 		<styleslinkhref></styleslinkhref>
-		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
+	<Layout name="Html Import" guid="{d682f552-fdec-4e25-a160-705c3381428d}" ><![CDATA[
+		<div class="">
+		<h2>Html Import</h2>
+		<p>Upload html file.</p>
+		<div class="custom-file">
+		<input type="file" class="custom-file-input" id="customFile">
+			<label class="custom-file-label" for="customFile">Choose file</label>
+		</div>
+		<div class="">
+		<button class="btn btn-primary" type="submit" name="button">Upload Html File</button>
+		</div>
+		</div>]]>
+	</Layout>
 </Collection>
