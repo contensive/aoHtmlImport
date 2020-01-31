@@ -61,7 +61,7 @@ namespace Contensive.Addons.HtmlImport {
                     } else {
                         //
                         // -- use body
-                        string body = bodyNode.InnerText;
+                        string body = bodyNode.InnerHtml;
                         if (string.IsNullOrWhiteSpace(body)) {
                             //
                             // -- body tag not found, import the whole document
