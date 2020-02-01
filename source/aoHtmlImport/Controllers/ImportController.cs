@@ -72,6 +72,9 @@ namespace Contensive.Addons.HtmlImport {
                         // -- body found, set the htmlDoc to the body
                         htmlDoc.LoadHtml(body);
                     }
+                    htmlDoc = ProcessIgnoreController.process(cp, htmlDoc);
+                    //
+                    // -- save manual layout
                     LayoutModel layout = null;
                     if ((layout == null) && !layoutId.Equals(0)) {
                         layout = DbBaseModel.create<LayoutModel>(cp, layoutId);
@@ -82,6 +85,8 @@ namespace Contensive.Addons.HtmlImport {
                         layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
                         layout.save(cp);
                     }
+                    //
+                    // -- save meta layout
                     if ((layout == null) && !string.IsNullOrWhiteSpace(layoutRecordName)) {
                         layout = DbBaseModel.createByUniqueName<LayoutModel>(cp, layoutRecordName);
                         if (layout == null) {
@@ -93,7 +98,8 @@ namespace Contensive.Addons.HtmlImport {
                     }
 
 
-
+                    //
+                    // -- save manual template
                     PageTemplateModel template  = null;
                     if ((template == null) && !templateId.Equals(0)) {
                         template = DbBaseModel.create<PageTemplateModel>(cp, templateId);
@@ -104,6 +110,8 @@ namespace Contensive.Addons.HtmlImport {
                         template.bodyHTML = htmlDoc.DocumentNode.OuterHtml;
                         layout.save(cp);
                     }
+                    //
+                    // -- save meta template
                     if ((template == null) && !string.IsNullOrWhiteSpace(templateRecordName)) {
                         template = DbBaseModel.createByUniqueName<PageTemplateModel>(cp, templateRecordName);
                         if (template == null) {
@@ -123,7 +131,8 @@ namespace Contensive.Addons.HtmlImport {
                     }
                     //
                     return true;
-                } catch (Exception) {
+                } catch (Exception ex) {
+                    cp.Site.ErrorReport(ex);
                     throw;
                 }
             }

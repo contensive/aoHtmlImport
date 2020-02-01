@@ -1,7 +1,7 @@
 
 rem all paths are relative to the git scripts folder
 
-set appName=app20200122204929
+set appName=app200131
 set majorVersion=5
 set minorVersion=1
 set collectionName=Html Import
