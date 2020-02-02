@@ -49,6 +49,16 @@
 </style>
 <body>
     <h1>The top of document</h1>
+    <ul>
+        <li><p>MustacheIgnore --See this word, but dont see <span class="mustache-ignore">ERROR</span> word.</p></li> 
+        <li><p>MustacheBasic --You should see the mustache tag 'abc' here -- <span class="mustache-basic abc">ERROR</span>.</p></li>        
+    </ul>
+    <p>This should be a loop on the 'staff' array with a name property</p>
+    <ul class="mustache-loop staff">
+        <li class="mustache-basic name">Sample Name</li>
+        <li class="mustache-ignore">ERROR - this should be hidden</li>
+    </ul>
+    
     <p>See this word, but dont see <span class="mustache-ignore">this other</span> word.</p>
 <div id=toolPanel>
     <div class=tpPanels>

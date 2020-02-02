@@ -9,31 +9,45 @@ namespace Contensive.Addons.HtmlImport {
         //
         public class HtmlImportClass : AddonBaseClass {
             //
+            private readonly string uploadFormInputName = "uploadFile";
+            private readonly string buttonCancel = "Cancel";
+            private readonly string buttonSubmit = "Upload";
+            //
             public override object Execute(CPBaseClass cp) {
                 try {
-                    string button = cp.Doc.GetText("button");
-                    string statusMessage = "";
-                    const string uploadFormInputName = "uploadFile";
-                    if (!string.IsNullOrEmpty(button)) {
-                        //
-                        // -- process button
-                        string uploadFile = "";
-                        string uploadFolder = cp.TempFiles.CreateUniqueFolder();
-                        if (!cp.TempFiles.SaveUpload(uploadFormInputName, uploadFolder, ref uploadFile)) {
-                            statusMessage = "Upload failed";
-                        } else {
-                            ImportController.importHtmlFile(cp, cp.TempFiles.PhysicalFilePath + uploadFolder + uploadFile, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("templateId"), ref statusMessage);
-                        }
-                    }
                     //
                     // -- create output form
                     var form = cp.AdminUI.NewToolForm();
+                    if (!string.IsNullOrEmpty(cp.Doc.GetText("button"))) {
+                        //
+                        // -- process button click
+                        if (cp.Doc.GetText("button").Equals(buttonCancel)) {
+                            cp.Response.Redirect("/");
+                            return string.Empty;
+                        }
+                        string uploadFile = "";
+                        string uploadFolderPath = cp.TempFiles.CreateUniqueFolder();
+                        if (!cp.TempFiles.SaveUpload(uploadFormInputName, uploadFolderPath, ref uploadFile)) {
+                            //
+                            // -- upload failed
+                            form.FailMessage = "Upload failed";
+                        } else {
+                            string statusMessage = string.Empty;
+                            if (!ImportController.importHtmlFile(cp, cp.TempFiles.PhysicalFilePath + uploadFolderPath + uploadFile, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("templateId"), ref statusMessage)) {
+                                form.FailMessage = statusMessage;
+                            } else {
+                                form.SuccessMessage = "Success";
+                            }
+                        }
+                        cp.TempFiles.DeleteFolder(uploadFolderPath);
+                    }
+                    //
+                    // -- populate output form
                     form.Title = "Html Importer";
-                    form.Warning = (string.IsNullOrWhiteSpace(statusMessage) ? "" : statusMessage);
                     form.Description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible templates and layouts. See reference at the end of this document.");
                     form.Body += cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
                     form.Body += cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")), "(Optional) Select the Layout you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.");
-                    form.Body += cp.AdminUI.GetEditRow("Select Template", cp.AdminUI.GetLookupContentEditor("templateId", "Page Templates", cp.Doc.GetInteger("templateId")), "(Optional) Select the Page Template you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.","",false,true);
+                    form.Body += cp.AdminUI.GetEditRow("Select Template", cp.AdminUI.GetLookupContentEditor("templateId", "Page Templates", cp.Doc.GetInteger("templateId")), "(Optional) Select the Page Template you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "", false, true);
                     //
                     form.Footer += cp.Html5.H4("Instructions");
                     form.Footer += cp.Html5.P("Use this tool to upload an html file for use as a page template or layout. Page templates are used for web pages. Layouts are generic records used by add-ons to construct forms.");

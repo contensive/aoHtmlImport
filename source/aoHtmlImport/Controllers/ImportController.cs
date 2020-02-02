@@ -72,7 +72,11 @@ namespace Contensive.Addons.HtmlImport {
                         // -- body found, set the htmlDoc to the body
                         htmlDoc.LoadHtml(body);
                     }
-                    htmlDoc = ProcessIgnoreController.process(cp, htmlDoc);
+                    //
+                    // -- process mustache nodes
+                    htmlDoc = MustacheIgnoreController.process(cp, htmlDoc);
+                    htmlDoc = MustacheBasicController.process(cp, htmlDoc);
+                    htmlDoc = MustacheLoopController.process(cp, htmlDoc);
                     //
                     // -- save manual layout
                     LayoutModel layout = null;

@@ -13,15 +13,24 @@ namespace Contensive.Addons.HtmlImport {
         /// <summary>
         /// process ignore (see tool form for details)
         /// </summary>
-        public class ProcessIgnoreController {
+        public class MustacheBasicController {
             //
             public static HtmlDocument process(CPBaseClass cp, HtmlDocument htmlDoc) {
-                string xPath = "//*[contains(@class,'mustache-ignore')]";
+                string xPath = "//*[contains(@class,'mustache-basic')]";
                 HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
-                if(nodeList!=null) {
+                if (nodeList != null) {
                     foreach (HtmlNode node in nodeList) {
-                        node.ParentNode.RemoveChild(node);
-                        //node.RemoveAll();
+                        IEnumerable<string> classList = node.GetClasses();
+                        if (classList != null) {
+                            string lastClass = "";
+                            foreach (string className in classList) {
+                                if (lastClass.Equals("mustache-basic")) {
+                                    node.InnerHtml = "{{" + className + "}}";
+                                    break;
+                                }
+                                lastClass = className;
+                            }
+                        }
                     }
                 }
                 return htmlDoc;
