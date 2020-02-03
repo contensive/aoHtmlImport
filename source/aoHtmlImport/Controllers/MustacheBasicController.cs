@@ -11,11 +11,11 @@ namespace Contensive.Addons.HtmlImport {
         // 
         // ====================================================================================================
         /// <summary>
-        /// process ignore (see tool form for details)
+        /// process delete (see tool form for details)
         /// </summary>
         public class MustacheBasicController {
             //
-            public static HtmlDocument process(CPBaseClass cp, HtmlDocument htmlDoc) {
+            public static void process(HtmlDocument htmlDoc) {
                 string xPath = "//*[contains(@class,'mustache-basic')]";
                 HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                 if (nodeList != null) {
@@ -25,7 +25,9 @@ namespace Contensive.Addons.HtmlImport {
                             string lastClass = "";
                             foreach (string className in classList) {
                                 if (lastClass.Equals("mustache-basic")) {
-                                    node.InnerHtml = "{{" + className + "}}";
+                                    node.InnerHtml = "{{{" + className + "}}}";
+                                    node.RemoveClass(className);
+                                    node.RemoveClass("mustache-basic");
                                     break;
                                 }
                                 lastClass = className;
@@ -33,7 +35,7 @@ namespace Contensive.Addons.HtmlImport {
                         }
                     }
                 }
-                return htmlDoc;
+                //return htmlDoc;
             }
         }
     }

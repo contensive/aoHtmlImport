@@ -11,20 +11,21 @@ namespace Contensive.Addons.HtmlImport {
         // 
         // ====================================================================================================
         /// <summary>
-        /// process ignore (see tool form for details)
+        /// process delete (see tool form for details)
         /// </summary>
-        public class MustacheIgnoreController {
+        public static class MustacheDeleteController {
             //
-            public static HtmlDocument process(CPBaseClass cp, HtmlDocument htmlDoc) {
-                string xPath = "//*[contains(@class,'mustache-ignore')]";
+            public static void process(HtmlDocument htmlDoc) {
+                string xPath = "//*[contains(@class,'mustache-delete')]";
                 HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                 if(nodeList!=null) {
                     foreach (HtmlNode node in nodeList) {
                         node.ParentNode.RemoveChild(node);
                         //node.RemoveAll();
+                        //node.ChildNodes.Clear();
                     }
                 }
-                return htmlDoc;
+                //return htmlDoc;
             }
         }
     }

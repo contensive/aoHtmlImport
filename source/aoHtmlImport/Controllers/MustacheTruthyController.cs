@@ -11,12 +11,12 @@ namespace Contensive.Addons.HtmlImport {
         // 
         // ====================================================================================================
         /// <summary>
-        /// process loop (see tool form for details)
+        /// process truthy (see tool form for details)
         /// </summary>
-        public class MustacheLoopController {
+        public class MustacheTruthyController {
             //
             public static void process(HtmlDocument htmlDoc) {
-                string xPath = "//*[contains(@class,'mustache-loop')]";
+                string xPath = "//*[contains(@class,'mustache-truthy')]";
                 HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                 if (nodeList != null) {
                     foreach (HtmlNode node in nodeList) {
@@ -24,11 +24,10 @@ namespace Contensive.Addons.HtmlImport {
                         if (classList != null) {
                             string lastClass = "";
                             foreach (string className in classList) {
-                                if (lastClass.Equals("mustache-loop")) {
+                                if (lastClass.Equals("mustache-truthy")) {
                                     node.RemoveClass(lastClass);
                                     node.RemoveClass(className);
                                     var listClone = node.Clone();
-                                    //HtmlNode.CreateNode(node.InnerHtml);
                                     node.ChildNodes.Clear();
                                     node.AppendChild(HtmlNode.CreateNode("{{{#" + className + "}}}"));
                                     foreach (HtmlNode listChild in listClone.ChildNodes) {
@@ -42,7 +41,6 @@ namespace Contensive.Addons.HtmlImport {
                         }
                     }
                 }
-                //return htmlDoc;
             }
         }
     }

@@ -88,9 +88,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.cs" />
+    <Compile Include="Controllers\MustacheTruthyController.cs" />
+    <Compile Include="Controllers\MustacheFalseyController.cs" />
     <Compile Include="Controllers\MustacheLoopController.cs" />
     <Compile Include="Controllers\MustacheBasicController.cs" />
-    <Compile Include="Controllers\MustacheIgnoreController.cs" />
+    <Compile Include="Controllers\MustacheDeleteController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\genericController.cs" />
@@ -103,10 +105,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\HelloWorldClass.cs" />
     <Compile Include="Views\HtmlImportClass.cs" />
-    <Compile Include="Views\SampleRemoteClass.cs" />
-    <Compile Include="Views\SampleAddonClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
