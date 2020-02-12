@@ -153,6 +153,17 @@ namespace Contensive.Addons.HtmlImport {
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
 
+                    form.Footer += cp.Html5.H5("Value Tag");
+                    {
+                        string sample = "";
+                        sample += "<p>My example is <span value=\"0\" class=\"mustache-value id\">content</span>.</p>";
+                        sample += "\n<p>My example is <span value=\"{{id}}\">content</span>.</p>";
+                        string indent = "";
+                        indent += cp.Html5.P("Replace the value of the html tag with a Mustache Value tag.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        form.Footer += cp.Html5.Div(indent, "ml-4");
+                    }
+
                     form.AddFormButton("Upload");
                     form.AddFormButton("Cancel");
                     return form.GetHtml(cp);

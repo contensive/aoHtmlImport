@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.cs" />
+     <Compile Include="Controllers\MustacheValueController.cs" />
     <Compile Include="Controllers\MustacheTruthyController.cs" />
     <Compile Include="Controllers\MustacheFalseyController.cs" />
     <Compile Include="Controllers\MustacheLoopController.cs" />
