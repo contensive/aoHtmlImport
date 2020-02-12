@@ -109,6 +109,7 @@ namespace Contensive.Addons.HtmlImport {
                 MustacheLoopController.process(htmlDoc);
                 MustacheTruthyController.process(htmlDoc);
                 MustacheFalseyController.process(htmlDoc);
+                MustacheValueController.process(htmlDoc);
                 //
                 // -- save manual layout
                 LayoutModel layout = null;
