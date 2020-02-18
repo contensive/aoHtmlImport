@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Text;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
 using HtmlAgilityPack;
@@ -36,7 +37,7 @@ namespace Contensive.Addons.HtmlImport {
                     string tempPath = cp.TempFiles.GetPath(htmlSourceTempPathFilename);
                     foreach (var file in cp.TempFiles.FileList(tempPath)) {
                         if (file.Extension.ToLowerInvariant().Equals(".html")) {
-                            htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name);
+                            htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name, Encoding.UTF8);
                             if (htmlDoc == null) {
                                 //
                                 // -- body tag not found, import the whole document
