@@ -1,0 +1,59 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="template" content="htmlimporttesttemplate">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" >
+    <title>Html Import Test Template</title>
+</head>
+
+<body>
+    <h1>Here is The Header</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-8 mustache-addon content box">
+
+			</div>
+			<div class="col-4">
+
+				<span class="mustache-delete">Here is a span that will be deleted</span>
+				
+				<span> Here is a select that uses the mustache-loop, mustache-basic, and mustache-delete classes </span>
+				<div>
+				   <label>Items</label>
+				   <div>
+					<select id="item">
+					  <option value="0">Select an Item:</option>
+					  <div class="mustache-loop items">
+					  <option value="1" class="mustache-basic name">This option element will be replaced with {{{name}}}</option>
+					  <option value="2" class="mustache-delete">This item is a placeholder will be deleted when imported</option>
+					  <option value="3" class="mustache-delete">This item is a placeholder will be deleted when imported</option>
+					  </div>
+					</select>
+					</div>
+				</div>
+				
+				
+				<br>
+				<span>Here is a div that uses the mustache-truthy class</span>
+				<div class="mustache-truthy description">
+					<p class="mustache-basic description">This text will be replaced by {{{description}}} and if there is a description, a description will be placed here when the code is run</p>
+				</div>
+				
+				 <br>
+				 <span>Here is a div that uses the mustache-falsey class</span>
+				<div class="mustache-falsey description">
+					<p>If there is not a description, the text here will show up in the html when the code is run.</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
