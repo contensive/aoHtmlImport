@@ -111,6 +111,7 @@ namespace Contensive.Addons.HtmlImport {
                 MustacheTruthyController.process(htmlDoc);
                 MustacheFalseyController.process(htmlDoc);
                 MustacheValueController.process(htmlDoc);
+                MustacheAddonController.process(htmlDoc);
                 //
                 // -- save manual layout
                 LayoutModel layout = null;

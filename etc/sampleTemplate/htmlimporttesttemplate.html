@@ -16,8 +16,8 @@
     <h1>Here is The Header</h1>
 	<div class="container">
 		<div class="row">
-			<div class="col-8 mustache-addon content box">
-
+			<div class="col-8 mustache-addon content_box">
+				Everything inside this will be replaced by the content box add on
 			</div>
 			<div class="col-4">
 
@@ -30,7 +30,7 @@
 					<select id="item">
 					  <option value="0">Select an Item:</option>
 					  <div class="mustache-loop items">
-					  <option value="1" class="mustache-basic name">This option element will be replaced with {{{name}}}</option>
+					  <option value="1" class="mustache-basic name">This option element will be replaced with "{{{name}}}"</option>
 					  <option value="2" class="mustache-delete">This item is a placeholder will be deleted when imported</option>
 					  <option value="3" class="mustache-delete">This item is a placeholder will be deleted when imported</option>
 					  </div>
@@ -42,7 +42,7 @@
 				<br>
 				<span>Here is a div that uses the mustache-truthy class</span>
 				<div class="mustache-truthy description">
-					<p class="mustache-basic description">This text will be replaced by {{{description}}} and if there is a description, a description will be placed here when the code is run</p>
+					<p class="mustache-basic description">This text will be replaced by "{{{description}}}" and if there is a description, a description will be placed here when the code is run</p>
 				</div>
 				
 				 <br>

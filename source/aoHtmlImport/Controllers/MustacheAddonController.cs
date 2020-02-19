@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Contensive.Addons.HtmlImport.Controllers {
-    public class MustacheValueController {
+    public class MustacheAddonController {
         //
         public static void process(HtmlDocument htmlDoc) {
-            string xPath = "//*[contains(@class,'mustache-value')]";
+            string xPath = "//*[contains(@class,'mustache-addon')]";
             HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
             if (nodeList != null) {
                 foreach (HtmlNode node in nodeList) {
@@ -17,10 +17,11 @@ namespace Contensive.Addons.HtmlImport.Controllers {
                     if (classList != null) {
                         string lastClass = "";
                         foreach (string className in classList) {
-                            if (lastClass.Equals("mustache-value")) {
-                                node.SetAttributeValue("value", "{{" + className + "}}");
+                            if (lastClass.Equals("mustache-addon")) {
+                                string addon = className.Replace("_", " ");
+                                node.InnerHtml = "{% \"" + addon + "\" %}";
                                 node.RemoveClass(className);
-                                node.RemoveClass("mustache-value");
+                                node.RemoveClass("mustache-addon");
                                 break;
                             }
                             lastClass = className;
