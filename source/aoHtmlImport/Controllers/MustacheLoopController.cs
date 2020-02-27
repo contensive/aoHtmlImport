@@ -30,11 +30,11 @@ namespace Contensive.Addons.HtmlImport {
                                     var listClone = node.Clone();
                                     //HtmlNode.CreateNode(node.InnerHtml);
                                     node.ChildNodes.Clear();
-                                    node.AppendChild(HtmlNode.CreateNode("{{{#" + className + "}}}"));
+                                    node.AppendChild(HtmlNode.CreateNode("{{#" + className + "}}"));
                                     foreach (HtmlNode listChild in listClone.ChildNodes) {
                                         node.AppendChild(listChild);
                                     }
-                                    node.AppendChild(HtmlNode.CreateNode("{{{/" + className + "}}}"));
+                                    node.AppendChild(HtmlNode.CreateNode("{{/" + className + "}}"));
                                     break;
                                 }
                                 lastClass = className;

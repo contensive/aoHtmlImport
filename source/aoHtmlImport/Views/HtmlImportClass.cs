@@ -31,11 +31,13 @@ namespace Contensive.Addons.HtmlImport {
                             //
                             // -- upload failed
                             form.FailMessage = "Upload failed";
-                        } else {
+                        }
+                        else {
                             string statusMessage = string.Empty;
                             if (!ImportController.importFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("templateId"), ref statusMessage)) {
                                 form.FailMessage = statusMessage;
-                            } else {
+                            }
+                            else {
                                 form.SuccessMessage = "Success";
                             }
                         }
@@ -153,10 +155,33 @@ namespace Contensive.Addons.HtmlImport {
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
 
+                    form.Footer += cp.Html5.H5("Value Tag");
+                    {
+                        string sample = "";
+                        sample += "<p>My example is <span value=\"0\" class=\"mustache-value id\">content</span>.</p>";
+                        sample += "\n<p>My example is <span value=\"{{id}}\">content</span>.</p>";
+                        string indent = "";
+                        indent += cp.Html5.P("Replace the value of the html tag with a Mustache Value tag.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        form.Footer += cp.Html5.Div(indent, "ml-4");
+                    }
+
+                    form.Footer += cp.Html5.H5("Addon Tag");
+                    {
+                        string sample = "";
+                        sample += "<span class=\"mustache-addon content_box\">content</span>";
+                        sample += "\n<span>{% \"content box\" %}</span>";
+                        string indent = "";
+                        indent += cp.Html5.P("NOTE: If the addon name contains spaces, replace each space with a _ instead. Ex. content box would be content_box. Replace the inner content of the html tag with the addon after the Mustache Addon tag.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        form.Footer += cp.Html5.Div(indent, "ml-4");
+                    }
+
                     form.AddFormButton("Upload");
                     form.AddFormButton("Cancel");
                     return form.GetHtml(cp);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex) {
                     //
                     // -- the execute method should typically not throw an error into the consuming method. Log and return.
                     cp.Site.ErrorReport(ex);

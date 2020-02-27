@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Text;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
 using HtmlAgilityPack;
@@ -38,7 +39,7 @@ namespace Contensive.Addons.HtmlImport {
                     foreach (var file in cp.TempFiles.FileList(tempPath)) {
                         if (file.Extension.ToLowerInvariant().Equals(".html")) {
                             htmlFileFound = true;
-                            htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name);
+                            htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name, Encoding.UTF8);
                             if (htmlDoc == null) {
                                 //
                                 // -- body tag not found, import the whole document
@@ -115,6 +116,8 @@ namespace Contensive.Addons.HtmlImport {
                 MustacheLoopController.process(htmlDoc);
                 MustacheTruthyController.process(htmlDoc);
                 MustacheFalseyController.process(htmlDoc);
+                MustacheValueController.process(htmlDoc);
+                MustacheAddonController.process(htmlDoc);
                 //
                 // -- save manual layout
                 LayoutModel layout = null;
