@@ -34,8 +34,10 @@ namespace Contensive.Addons.HtmlImport {
                     //
                     // -- import all html files in the root folder
                     string tempPath = cp.TempFiles.GetPath(htmlSourceTempPathFilename);
+                    bool htmlFileFound = false;
                     foreach (var file in cp.TempFiles.FileList(tempPath)) {
                         if (file.Extension.ToLowerInvariant().Equals(".html")) {
+                            htmlFileFound = true;
                             htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name);
                             if (htmlDoc == null) {
                                 //
@@ -47,6 +49,10 @@ namespace Contensive.Addons.HtmlImport {
                                 return false;
                             }
                         }
+                    }
+                    if (!htmlFileFound) {
+                        returnStatusMessage += cp.Html.p("No files were found with .HTML extension. Only files with .HTML extensions are imported.");
+                        return false;
                     }
                     return true;
                 } catch (Exception ex) {
