@@ -34,7 +34,7 @@ namespace Contensive.Addons.HtmlImport {
                         }
                         else {
                             string statusMessage = string.Empty;
-                            if (!ImportController.importFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("templateId"), ref statusMessage)) {
+                            if (!ImportController.importFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("templateId"), cp.Doc.GetInteger("emailId"), ref statusMessage)) {
                                 form.FailMessage = statusMessage;
                             }
                             else {
@@ -46,10 +46,11 @@ namespace Contensive.Addons.HtmlImport {
                     //
                     // -- populate output form
                     form.Title = "Html Importer";
-                    form.Description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible templates and layouts. See reference at the end of this document.");
+                    form.Description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible layouts, templates and addons. See reference at the end of this document.");
                     form.Body += cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
                     form.Body += cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")), "(Optional) Select the Layout you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.");
                     form.Body += cp.AdminUI.GetEditRow("Select Template", cp.AdminUI.GetLookupContentEditor("templateId", "Page Templates", cp.Doc.GetInteger("templateId")), "(Optional) Select the Page Template you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "", false, true);
+                    form.Body += cp.AdminUI.GetEditRow("Select Email", cp.AdminUI.GetLookupContentEditor("emailId", "Email", cp.Doc.GetInteger("emailId")), "(Optional) Select the Group, System or Conditional Email you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "", false, true);
                     //
                     form.Footer += cp.Html5.H4("Instructions");
                     form.Footer += cp.Html5.Div(
@@ -65,6 +66,7 @@ namespace Contensive.Addons.HtmlImport {
                             + cp.Html5.Li("Meta Tag. Include in your html file a meta tag with name set to either 'layout' or 'template' and content set to the name of the record."
                             + "<pre>" + cp.Utils.EncodeHTML("<meta name=\"template\" content=\"One Column Template\">") + "</pre>"
                             + "<pre>" + cp.Utils.EncodeHTML("<meta name=\"layout\" content=\"Join Form\">") + "</pre>"
+                            + "<pre>" + cp.Utils.EncodeHTML("<meta name=\"email\" content=\"Invitation Email\">") + "</pre>"
                             + "")
                             + cp.Html5.Li("Manual Select. Select the template and/or layout on this form and the html will be saved to a record with the same name as the uploaded file.")
                         )
