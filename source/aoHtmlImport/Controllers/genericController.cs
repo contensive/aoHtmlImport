@@ -60,6 +60,49 @@ namespace Contensive.Addons.HtmlImport {
                     return source.Year + "-" + source.Month.ToString().PadLeft(2, '0') + "-" + source.Day.ToString().PadLeft(2, '0');
                 }
             }
+            //
+            //========================================================================================================
+            /// <summary>
+            /// Convert the href and src links in html content to full urls that include the protocol and domain
+            /// When we have time to do a real method that doesnt just replace cases, it will be in cp.html
+            /// </summary>
+            /// <param name="htmlContent"></param>
+            /// <param name="urlProtocolDomainSlash"></param>
+            /// <returns></returns>
+            public static string convertLinksToAbsolute(string htmlContent, string urlProtocolDomainSlash) {
+                string result = htmlContent;
+                result = result.Replace(" href=\"", " href=\"/");
+                result = result.Replace(" href=\"/http", " href=\"http");
+                result = result.Replace(" href=\"/mailto", " href=\"mailto");
+                result = result.Replace(" href=\"//", " href=\"" + urlProtocolDomainSlash);
+                result = result.Replace(" href=\"/?", " href=\"" + urlProtocolDomainSlash + "?");
+                result = result.Replace(" href=\"/", " href=\"" + urlProtocolDomainSlash);
+                //
+                result = result.Replace(" href=", " href=/");
+                result = result.Replace(" href=/\"", " href=\"");
+                result = result.Replace(" href=/http", " href=http");
+                result = result.Replace(" href=//", " href=" + urlProtocolDomainSlash);
+                result = result.Replace(" href=/?", " href=" + urlProtocolDomainSlash + "?");
+                result = result.Replace(" href=/", " href=" + urlProtocolDomainSlash);
+                //
+                result = result.Replace(" src=\"", " src=\"/");
+                result = result.Replace(" src=\"/http", " src=\"http");
+                result = result.Replace(" src=\"/../", " src=\"" + urlProtocolDomainSlash);
+                result = result.Replace(" src=\"/./", " src=\"" + urlProtocolDomainSlash);
+                result = result.Replace(" src=\"//", " src=\"" + urlProtocolDomainSlash);
+                result = result.Replace(" src=\"/?", " src=\"" + urlProtocolDomainSlash + "?");
+                result = result.Replace(" src=\"/", " src=\"" + urlProtocolDomainSlash);
+                //
+                result = result.Replace(" src=", " src=/");
+                result = result.Replace(" src=/\"", " src=\"");
+                result = result.Replace(" src=/http", " src=http");
+                result = result.Replace(" src=/../", " src=" + urlProtocolDomainSlash);
+                result = result.Replace(" src=/./", " src=" + urlProtocolDomainSlash);
+                result = result.Replace(" src=//", " src=" + urlProtocolDomainSlash);
+                result = result.Replace(" src=/?", " src=" + urlProtocolDomainSlash + "?");
+                result = result.Replace(" src=/", " src=" + urlProtocolDomainSlash);
+                return result;
+            }
         }
     }
 }

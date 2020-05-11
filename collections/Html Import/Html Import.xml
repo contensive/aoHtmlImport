@@ -3,27 +3,15 @@
 	<HelpLink></HelpLink>
 	<Help></Help>
 	<Addon name="Html Import" guid="{81c8e16a-c661-4c59-921c-998c6acaa6bc}" type="Tool">
-		<Copy></Copy>
-		<CopyText></CopyText>
-		<!-- deprecated --><ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.HtmlImport.Views.HtmlImportClass]]></DotNetClass>
-		<ArgumentList><![CDATA[]]></ArgumentList>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
-		<Help></Help>
-		<HelpLink></HelpLink>
 		<Icon Link="" width="50" height="50" sprites="0" />
 		<InIframe>No</InIframe>
 		<BlockEditTools>Yes</BlockEditTools>
-		<AliasList></AliasList>
-		<FormXML></FormXML>
 		<IsInline>No</IsInline>
-		<JavascriptInHead></JavascriptInHead>
 		<javascriptForceHead>No</javascriptForceHead>
-		<JSHeadScriptSrc></JSHeadScriptSrc>
-		<!-- deprecated --><JSBodyScriptSrc></JSBodyScriptSrc>
-		<!-- deprecated --><JavascriptBodyEnd></JavascriptBodyEnd>
-		<!-- deprecated --><JavascriptOnLoad></JavascriptOnLoad>
+		<JSHeadScriptSrc><![CDATA[/htmlImport/script.js]]></JSHeadScriptSrc>
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
@@ -36,12 +24,7 @@
 		<Diagnostic>No</Diagnostic>
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
-		<MetaDescription></MetaDescription>
-		<OtherHeadTags></OtherHeadTags>
-		<PageTitle></PageTitle>
-		<RemoteAssetLink></RemoteAssetLink>
-		<Styles></Styles>
-		<styleslinkhref></styleslinkhref>
+		<styleslinkhref><![CDATA[/htmlImport/styles.css]]></styleslinkhref>
 		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Layout name="Html Import" guid="{d682f552-fdec-4e25-a160-705c3381428d}" ><![CDATA[
@@ -57,4 +40,12 @@
 		</div>
 		</div>]]>
 	</Layout>
+	<Resource name="script.js" type="www" path="htmlImport" />
+	<Resource name="styles.css" type="www" path="/htmlImport" />
+	<Resource name="CPBase.dll" type="executable" path="" />
+	<Resource name="ContensiveDbModels.dll" type="executable" path="" />
+	<Resource name="HtmlAgilityPack.dll" type="executable" path="" />
+	<Resource name="HtmlImport.dll" type="executable" path="" />
+	<Resource name="Newtonsoft.Json.dll" type="executable" path="" />
+	<Resource name="Nustache.Core.dll" type="executable" path="" />
 </Collection>

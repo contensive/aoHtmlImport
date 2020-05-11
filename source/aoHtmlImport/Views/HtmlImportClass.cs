@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using Contensive.Addons.HtmlImport.Controllers;
 using Contensive.Addons.HtmlImport.Models;
 using Contensive.BaseClasses;
@@ -22,7 +23,7 @@ namespace Contensive.Addons.HtmlImport {
                         //
                         // -- process button click
                         if (cp.Doc.GetText("button").Equals(buttonCancel)) {
-                            cp.Response.Redirect("/");
+                            cp.Response.Redirect("?");
                             return string.Empty;
                         }
                         string uploadFile = "";
@@ -31,13 +32,11 @@ namespace Contensive.Addons.HtmlImport {
                             //
                             // -- upload failed
                             form.FailMessage = "Upload failed";
-                        }
-                        else {
+                        } else {
                             string statusMessage = string.Empty;
-                            if (!ImportController.importFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("templateId"), cp.Doc.GetInteger("emailId"), ref statusMessage)) {
+                            if (!ImportController.importFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("importTypeId"), cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref statusMessage)) {
                                 form.FailMessage = statusMessage;
-                            }
-                            else {
+                            } else {
                                 form.SuccessMessage = "Success";
                             }
                         }
@@ -47,10 +46,38 @@ namespace Contensive.Addons.HtmlImport {
                     // -- populate output form
                     form.Title = "Html Importer";
                     form.Description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible layouts, templates and addons. See reference at the end of this document.");
+                    {
+                        var importTypeList = new List<string>() { "Import Destination set in Html File", "Layout For Addon", "Page Template", "Email Template", "Email" };
+                        string editRow = cp.AdminUI.GetEditRow("Select Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, 1, "hiImportTypeid"), 
+                            "Select the type of html you are importing.", "");
+                        form.Body += cp.Html5.Div(editRow, "", "hiImportType");
+                    }
+                    {
+                        //form.Body += cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")), "(Optional) Select the Layout you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "hiSelectLayout");
+                        string editRow = cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")), 
+                            "Select the Layout you want to populate with this html document.", "hiSelectLayout");
+                        form.Body += cp.Html5.Div(editRow, "", "hiSelectLayoutId");
+                    }
+                    {
+                        string editRow = cp.AdminUI.GetEditRow("Select Page Template", cp.AdminUI.GetLookupContentEditor("pageTemplateId", "Page Templates", cp.Doc.GetInteger("pagetemplateId")), 
+                            "Select the Page Template you want to populate with this html document. " +
+                            "Page templates import just the html body. Head metadata and associated resources have to be manually configured.", "hiSelectPageTemplate");
+                        form.Body += cp.Html5.Div(editRow, "", "hiSelectPageTemplateId");
+                    }
+                    {
+                        string editRow = cp.AdminUI.GetEditRow("Select Email Template", cp.AdminUI.GetLookupContentEditor("emailTemplateId", "Email Templates", cp.Doc.GetInteger("emailtemplateId")), 
+                            "Select the Email Template you want to populate with this html document. " +
+                            "Email templates import the entire html document including the head tag elements. If they are missing the system will create them.", "hiSelectPageTemplate");
+                        form.Body += cp.Html5.Div(editRow, "", "hiSelectEmailTemplateId");
+                    }
+                    {
+                        string editRow = cp.AdminUI.GetEditRow("Select Email", cp.AdminUI.GetLookupContentEditor("emailId", "Email", cp.Doc.GetInteger("emailId")), 
+                            "Select the Group, System or Conditional Email you want to populate with this html document. ", "hiSelectEmail");
+                        form.Body += cp.Html5.Div(editRow, "", "hiSelectEmailId");
+                    }
+
                     form.Body += cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
-                    form.Body += cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")), "(Optional) Select the Layout you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.");
-                    form.Body += cp.AdminUI.GetEditRow("Select Template", cp.AdminUI.GetLookupContentEditor("templateId", "Page Templates", cp.Doc.GetInteger("templateId")), "(Optional) Select the Page Template you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "", false, true);
-                    form.Body += cp.AdminUI.GetEditRow("Select Email", cp.AdminUI.GetLookupContentEditor("emailId", "Email", cp.Doc.GetInteger("emailId")), "(Optional) Select the Group, System or Conditional Email you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "", false, true);
+
                     //
                     form.Footer += cp.Html5.H4("Instructions");
                     form.Footer += cp.Html5.Div(
