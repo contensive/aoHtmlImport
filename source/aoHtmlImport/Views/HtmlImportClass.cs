@@ -1,9 +1,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Contensive.Addons.HtmlImport.Controllers;
 using Contensive.Addons.HtmlImport.Models;
 using Contensive.BaseClasses;
+using Contensive.Models.Db;
 
 namespace Contensive.Addons.HtmlImport {
     namespace Views {
@@ -86,9 +88,9 @@ namespace Contensive.Addons.HtmlImport {
                         , "ml-4"
                     );
                     //
-                    form.Footer += cp.Html5.H5("Import Destination");
+                    form.Footer += cp.Html5.H5("Import Type");
                     form.Footer += cp.Html5.Div(
-                        cp.Html5.P("The destination is the template or layout record where the upload will be stored. There are two ways to set the destination, html meta tags or select manually.")
+                        cp.Html5.P("Select the type of data being imported. There are two ways to set the destination, html meta tags or select manually.")
                         + cp.Html5.Ol(""
                             + cp.Html5.Li("Meta Tag. Include in your html file a meta tag with name set to either 'layout' or 'template' and content set to the name of the record."
                             + "<pre>" + cp.Utils.EncodeHTML("<meta name=\"template\" content=\"One Column Template\">") + "</pre>"

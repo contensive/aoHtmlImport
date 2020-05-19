@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using System.Text;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
@@ -38,6 +39,7 @@ namespace Contensive.Addons.HtmlImport {
                     bool htmlFileFound = false;
                     foreach (var file in cp.TempFiles.FileList(tempPath)) {
                         if (file.Extension.ToLowerInvariant().Equals(".html")) {
+                            string newRecordName = Path.GetFileNameWithoutExtension(file.Name);
                             htmlFileFound = true;
                             htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name, Encoding.UTF8);
                             if (htmlDoc == null) {
@@ -46,7 +48,7 @@ namespace Contensive.Addons.HtmlImport {
                                 returnStatusMessage += cp.Html.p("The uploaded file is empty.");
                                 return false;
                             }
-                            if (!importHtmlDoc(cp, htmlDoc, importTypeId, layoutId, pageTemplateId, emailTemplateId, emailId, ref returnStatusMessage)) {
+                            if (!importHtmlDoc(cp, htmlDoc, importTypeId, newRecordName, layoutId, pageTemplateId, emailTemplateId, emailId, ref returnStatusMessage)) {
                                 return false;
                             }
                         }
@@ -65,7 +67,7 @@ namespace Contensive.Addons.HtmlImport {
             //
             //====================================================================================================
             //
-            public static bool importHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, int importTypeId, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
+            public static bool importHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, int importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
                 //
                 // -- search for meta name=template|layout content=recordaname
                 string layoutRecordName = string.Empty;
@@ -135,6 +137,11 @@ namespace Contensive.Addons.HtmlImport {
                 // -- save manual layout
                 LayoutModel layout = null;
                 {
+                    if( importTypeId.Equals(2) && layoutId.Equals(0) & string.IsNullOrWhiteSpace(layoutRecordName) ) {
+                        //
+                        // -- layout type but no layout selected, and no layout imported, use filename
+                        layoutRecordName = newRecordName;
+                    }
                     if (!layoutId.Equals(0)) {
                         layout = DbBaseModel.create<LayoutModel>(cp, layoutId);
                         if (layout == null) {
@@ -160,6 +167,11 @@ namespace Contensive.Addons.HtmlImport {
                 // -- save page template
                 PageTemplateModel pageTemplate = null;
                 {
+                    if (importTypeId.Equals(3) && pageTemplateId.Equals(0) & string.IsNullOrWhiteSpace(pageTemplateRecordName)) {
+                        //
+                        // -- layout type but no layout selected, and no layout imported, use filename
+                        pageTemplateRecordName = newRecordName;
+                    }
                     if (!pageTemplateId.Equals(0)) {
                         pageTemplate = DbBaseModel.create<PageTemplateModel>(cp, pageTemplateId);
                         if (pageTemplate == null) {
@@ -192,6 +204,11 @@ namespace Contensive.Addons.HtmlImport {
                 // -- save email template
                 EmailTemplateModel emailTemplate = null;
                 {
+                    if (importTypeId.Equals(4) && emailTemplateId.Equals(0) & string.IsNullOrWhiteSpace(emailTemplateRecordName)) {
+                        //
+                        // --  type but no layout selected, and no layout imported, use filename
+                        emailTemplateRecordName = newRecordName;
+                    }
                     if (!emailTemplateId.Equals(0)) {
                         emailTemplate = DbBaseModel.create<EmailTemplateModel>(cp, emailTemplateId);
                         if (emailTemplate == null) {
@@ -217,6 +234,11 @@ namespace Contensive.Addons.HtmlImport {
                 // -- save email
                 EmailModel email = null;
                 {
+                    if (importTypeId.Equals(5) && emailId.Equals(0) & string.IsNullOrWhiteSpace(emailRecordName)) {
+                        //
+                        // -- layout type but no layout selected, and no layout imported, use filename
+                        emailRecordName = newRecordName;
+                    }
                     if (!emailId.Equals(0)) {
                         email = DbBaseModel.create<EmailModel>(cp, emailId);
                         if (email == null) {
