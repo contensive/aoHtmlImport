@@ -20,7 +20,7 @@ namespace Contensive.Addons.HtmlImport {
             /// <param name="cp"></param>
             /// <param name="htmlSourceTempPathFilename"></param>
             /// <returns></returns>
-            public static bool importFile(CPBaseClass cp, string htmlSourceTempPathFilename, int importTypeId , int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
+            public static bool processImportFile(CPBaseClass cp, string htmlSourceTempPathFilename, int importTypeId , int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
                 try {
                     returnStatusMessage = "";
                     HtmlDocument htmlDoc = new HtmlDocument();
@@ -48,7 +48,7 @@ namespace Contensive.Addons.HtmlImport {
                                 returnStatusMessage += cp.Html.p("The uploaded file is empty.");
                                 return false;
                             }
-                            if (!importHtmlDoc(cp, htmlDoc, importTypeId, newRecordName, layoutId, pageTemplateId, emailTemplateId, emailId, ref returnStatusMessage)) {
+                            if (!processHtmlDoc(cp, htmlDoc, importTypeId, newRecordName, layoutId, pageTemplateId, emailTemplateId, emailId, ref returnStatusMessage)) {
                                 return false;
                             }
                         }
@@ -67,7 +67,7 @@ namespace Contensive.Addons.HtmlImport {
             //
             //====================================================================================================
             //
-            public static bool importHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, int importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
+            public static bool processHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, int importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
                 //
                 // -- search for meta name=template|layout content=recordaname
                 string layoutRecordName = string.Empty;
@@ -127,10 +127,10 @@ namespace Contensive.Addons.HtmlImport {
                 //
                 // -- process mustache nodes
                 MustacheDeleteController.process(htmlDoc);
-                MustacheBasicController.process(htmlDoc);
-                MustacheLoopController.process(htmlDoc);
+                MustacheVariableController.process(htmlDoc);
+                MustacheSectionController.process(htmlDoc);
                 MustacheTruthyController.process(htmlDoc);
-                MustacheFalseyController.process(htmlDoc);
+                MustacheInvertedSectionController.process(htmlDoc);
                 MustacheValueController.process(htmlDoc);
                 MustacheAddonController.process(htmlDoc);
                 //

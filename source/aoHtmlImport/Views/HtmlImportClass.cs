@@ -36,7 +36,7 @@ namespace Contensive.Addons.HtmlImport {
                             form.FailMessage = "Upload failed";
                         } else {
                             string statusMessage = string.Empty;
-                            if (!ImportController.importFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("importTypeId"), cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref statusMessage)) {
+                            if (!ImportController.processImportFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("importTypeId"), cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref statusMessage)) {
                                 form.FailMessage = statusMessage;
                             } else {
                                 form.SuccessMessage = "Success";
@@ -108,76 +108,76 @@ namespace Contensive.Addons.HtmlImport {
                         indent += cp.Html5.P("Mustache is a popular templating scheme. You may choose to include mustache tags in your html directly in which case the html may not render well in a browser. You can alternativly choose to set special styles outlined here and the import tool will add the Mustache tags you indicate. Reference any of the many <a href=\"https://mustache.github.io/mustache.5.html\">Mustache references online</a>.");
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
-                    form.Footer += cp.Html5.H5("Basic Tag");
+                    form.Footer += cp.Html5.H5("Mustache Variable");
                     {
                         string sample = "";
-                        sample += "<p>My name is <span class=\"mustache-basic firstName another-class\">Sample Name</span>.</p>";
-                        sample += "\n<p>My name is <span class=\"another-class\">{{firstName}}</span>.</p>";
+                        sample += "<p>My name is <span data-mustache-variable=\"firstName\">Sample Name</span>.</p>";
+                        sample += "\n<p>My name is <span>{{firstName}}</span>.</p>";
                         string indent = "";
                         indent += cp.Html5.P("Replace the content of the html tag with a Mustache Basic tag.");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
+                    ////
+                    //form.Footer += cp.Html5.H5("Delete");
+                    //{
+                    //    string sample = "";
+                    //    sample += "<p>This is in the layout.<span data-delete>This is not.</span></p>";
+                    //    sample += "\n<p>This is in the layout.</p>";
+                    //    string indent = "";
+                    //    indent += cp.Html5.P("Delete the tag that contains this class, and all child tags.");
+                    //    indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                    //    form.Footer += cp.Html5.Div(indent, "ml-4");
+                    //}
                     //
-                    form.Footer += cp.Html5.H5("Delete Tag");
+                    form.Footer += cp.Html5.H5("Mustache Section");
                     {
                         string sample = "";
-                        sample += "<p>This is in the layout.<span class=\"mustache-delete\">This is not.</span></p>";
-                        sample += "\n<p>This is in the layout.</p>";
-                        string indent = "";
-                        indent += cp.Html5.P("Delete the tag that contains this class, and all child tags.");
-                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                        form.Footer += cp.Html5.Div(indent, "ml-4");
-                    }
-                    //
-                    form.Footer += cp.Html5.H5("Loop Tag");
-                    {
-                        string sample = "";
-                        sample += "<ul class=\"mustache-loop staff\">"
-                            + "\n\t<li class=\"mustache-basic name\">Sample Name</li>"
-                            + "\n\t<li class=\"mustache-delete\">Name To Skip</li>"
+                        sample += "<ul data-mustache-section=\"staff\">"
+                            + "\n\t<li data-mustache-variable=\"name\">Sample Name</li>"
+                            + "\n\t<li data-delete>Name To Skip</li>"
                             + "\n</ul>"
-                            + "\n<ul class=\"mustache-loop staff\">"
+                            + "\n<ul>"
                             + "\n\t{{#staff}}"
                             + "\n\t<li class=\"\">{{name}}</li>"
                             + "\n\t{{/staff}}"
                             + "\n</ul>";
                         string indent = "";
-                        indent += cp.Html5.P("Insert Mustache Loop around the content of a tag that includes this class. The Mustache Tag is set to class that follows mustache-loop.");
+                        indent += cp.Html5.P("Add a Mustache Section around content to be removed or repeated. If the object property is false, null, or an empty list, the section is removed. If the value is true the section is included. If the value is a list the section is repeated for each item in the list.");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
+                    ////
+                    //form.Footer += cp.Html5.H5("Truthy Tag");
+                    //{
+                    //    string indent = "";
+                    //    indent += cp.Html5.P("Insert Mustache Truthy around the content of a tag that includes this class. The Mustache Tag is set to class that follows mustache-truthy.");
+                    //    indent += "<pre>"
+                    //        + cp.Utils.EncodeHTML(""
+                    //            + "\n<div class=\"mustache-truthy headline\">"
+                    //            + "\n\t<h2 class=\"mustache-basic headline\">This is the Sample Headline</h2>"
+                    //            + "\n</div>"
+                    //            + "\n<div>"
+                    //            + "\n\t{{#headline}}"
+                    //            + "\n\t<h2>{{headline}}</h2>"
+                    //            + "\n\t{{/headline}}"
+                    //            + "\n</div>"
+                    //            + "")
+                    //        + "</pre>";
+                    //    form.Footer += cp.Html5.Div(indent, "ml-4");
+                    //}
                     //
-                    form.Footer += cp.Html5.H5("Truthy Tag");
+                    form.Footer += cp.Html5.H5("Mustache Inverted Section");
                     {
                         string indent = "";
-                        indent += cp.Html5.P("Insert Mustache Truthy around the content of a tag that includes this class. The Mustache Tag is set to class that follows mustache-truthy.");
+                        indent += cp.Html5.P("Add a Mustache Inverted Section data attrbiute around content to be included if the object property value is false.");
                         indent += "<pre>"
                             + cp.Utils.EncodeHTML(""
-                                + "\n<div class=\"mustache-truthy headline\">"
-                                + "\n\t<h2 class=\"mustache-basic headline\">This is the Sample Headline</h2>"
-                                + "\n</div>"
-                                + "\n<div>"
-                                + "\n\t{{#headline}}"
-                                + "\n\t<h2>{{headline}}</h2>"
-                                + "\n\t{{/headline}}"
-                                + "\n</div>"
-                                + "")
-                            + "</pre>";
-                        form.Footer += cp.Html5.Div(indent, "ml-4");
-                    }
-                    //
-                    form.Footer += cp.Html5.H5("Falsey Tag");
-                    {
-                        string indent = "";
-                        indent += cp.Html5.P("Insert Mustache Falsey around the content of a tag that includes this class. The Mustache Tag is set to class that follows mustache-falsey.");
-                        indent += "<pre>"
-                            + cp.Utils.EncodeHTML(""
-                                + "\n<div class=\"mustache-falsey itemList\">"
+                                + "\n<div data-mustache-section=\"emptyList\">"
                                 + "\n\t<p>No items were found.</p>"
                                 + "\n</div>"
                                 + "\n<div>"
-                                + "\n\t{{^itemList}}"
+                                + "\n\t{{^emptyList}}"
                                 + "\n\t<p>No items were found.</p>"
                                 + "\n\t{{/itemList}}"
                                 + "\n</div>"
@@ -186,10 +186,10 @@ namespace Contensive.Addons.HtmlImport {
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
 
-                    form.Footer += cp.Html5.H5("Value Tag");
+                    form.Footer += cp.Html5.H5("Mustache Attribute Values");
                     {
                         string sample = "";
-                        sample += "<p>My example is <span value=\"0\" class=\"mustache-value id\">content</span>.</p>";
+                        sample += "<p>My example is <span value=\"0\" data-mustache-value=\"id\">content</span>.</p>";
                         sample += "\n<p>My example is <span value=\"{{id}}\">content</span>.</p>";
                         string indent = "";
                         indent += cp.Html5.P("Replace the value of the html tag with a Mustache Value tag.");
@@ -197,10 +197,10 @@ namespace Contensive.Addons.HtmlImport {
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
 
-                    form.Footer += cp.Html5.H5("Addon Tag");
+                    form.Footer += cp.Html5.H5("Mustache Addon");
                     {
                         string sample = "";
-                        sample += "<span class=\"mustache-addon content_box\">content</span>";
+                        sample += "<span data-mustache-addon=\"content_box\">content</span>";
                         sample += "\n<span>{% \"content box\" %}</span>";
                         string indent = "";
                         indent += cp.Html5.P("NOTE: If the addon name contains spaces, replace each space with a _ instead. Ex. content box would be content_box. Replace the inner content of the html tag with the addon after the Mustache Addon tag.");

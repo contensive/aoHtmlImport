@@ -9,19 +9,35 @@ using HtmlAgilityPack;
 
 namespace Contensive.Addons.HtmlImport.Controllers.Tests {
     [TestClass()]
-    public class MustacheBasicControllerTests {
+    public class MustacheVariableController_Tests {
         [TestMethod()]
-        public void processTest() {
+        public void class_Test() {
             string test1Src = "<p><span class=\"mustache-basic abc\">ERROR</span>.</p>";
             string test1Expect = "<p><span>{{{abc}}}</span>.</p>";
             //
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(test1Src);
-            Controllers.MustacheBasicController.process(htmlDoc);
+            Controllers.MustacheVariableController.process(htmlDoc);
+            string test1Result = htmlDoc.DocumentNode.OuterHtml;
+            //
+            Assert.AreEqual(test1Expect, test1Result);
+
+        }
+
+        [TestMethod()]
+        public void data_Test() {
+            string test1Src = "<p><span data-mustache-variable=\"abc\">ERROR</span>.</p>";
+            string test1Expect = "<p><span>{{{abc}}}</span>.</p>";
+            //
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(test1Src);
+            Controllers.MustacheVariableController.process(htmlDoc);
             string test1Result = htmlDoc.DocumentNode.OuterHtml;
             //
             Assert.AreEqual(test1Expect, test1Result);
 
         }
     }
+    //
+
 }
