@@ -34,13 +34,26 @@ namespace Contensive.Addons.HtmlImport.Controllers {
             }
             {
                 //
-                // -- data-mustach-addon
+                // -- data-mustach-addon (legacy)
                 string xPath = "//*[@data-mustache-addon]";
                 HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                 if (nodeList != null) {
                     foreach (HtmlNode node in nodeList) {
                         string addonName = node.Attributes["data-mustache-addon"]?.Value;
                         node.Attributes.Remove("data-mustache-addon");
+                        node.InnerHtml = "{% \"" + addonName + "\" %}";
+                    }
+                }
+            }
+            {
+                //
+                // -- data-mustach-addon
+                string xPath = "//*[@data-addon]";
+                HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
+                if (nodeList != null) {
+                    foreach (HtmlNode node in nodeList) {
+                        string addonName = node.Attributes["data-addon"]?.Value;
+                        node.Attributes.Remove("data-addon");
                         node.InnerHtml = "{% \"" + addonName + "\" %}";
                     }
                 }

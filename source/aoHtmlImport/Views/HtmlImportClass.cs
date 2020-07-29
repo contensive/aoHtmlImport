@@ -102,7 +102,7 @@ namespace Contensive.Addons.HtmlImport {
                         , "ml-4"
                     );
                     //
-                    form.Footer += cp.Html5.H5("Mustache Templates");
+                    form.Footer += cp.Html5.H5("data-mustache-variable");
                     {
                         string indent = "";
                         indent += cp.Html5.P("Mustache is a popular templating scheme. You may choose to include mustache tags in your html directly in which case the html may not render well in a browser. You can alternativly choose to set special styles outlined here and the import tool will add the Mustache tags you indicate. Reference any of the many <a href=\"https://mustache.github.io/mustache.5.html\">Mustache references online</a>.");
@@ -118,19 +118,8 @@ namespace Contensive.Addons.HtmlImport {
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
-                    ////
-                    //form.Footer += cp.Html5.H5("Delete");
-                    //{
-                    //    string sample = "";
-                    //    sample += "<p>This is in the layout.<span data-delete>This is not.</span></p>";
-                    //    sample += "\n<p>This is in the layout.</p>";
-                    //    string indent = "";
-                    //    indent += cp.Html5.P("Delete the tag that contains this class, and all child tags.");
-                    //    indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    //    form.Footer += cp.Html5.Div(indent, "ml-4");
-                    //}
                     //
-                    form.Footer += cp.Html5.H5("Mustache Section");
+                    form.Footer += cp.Html5.H5("data-mustache-section");
                     {
                         string sample = "";
                         sample += "<ul data-mustache-section=\"staff\">"
@@ -167,13 +156,13 @@ namespace Contensive.Addons.HtmlImport {
                     //    form.Footer += cp.Html5.Div(indent, "ml-4");
                     //}
                     //
-                    form.Footer += cp.Html5.H5("Mustache Inverted Section");
+                    form.Footer += cp.Html5.H5("data-mustache-inverted-section");
                     {
                         string indent = "";
                         indent += cp.Html5.P("Add a Mustache Inverted Section data attrbiute around content to be included if the object property value is false.");
                         indent += "<pre>"
                             + cp.Utils.EncodeHTML(""
-                                + "\n<div data-mustache-section=\"emptyList\">"
+                                + "\n<div data-mustache-inverted-section=\"emptyList\">"
                                 + "\n\t<p>No items were found.</p>"
                                 + "\n</div>"
                                 + "\n<div>"
@@ -186,7 +175,7 @@ namespace Contensive.Addons.HtmlImport {
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
 
-                    form.Footer += cp.Html5.H5("Mustache Attribute Values");
+                    form.Footer += cp.Html5.H5("data-mustache-value");
                     {
                         string sample = "";
                         sample += "<p>My example is <span value=\"0\" data-mustache-value=\"id\">content</span>.</p>";
@@ -196,14 +185,36 @@ namespace Contensive.Addons.HtmlImport {
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }
-
-                    form.Footer += cp.Html5.H5("Mustache Addon");
+                    //
+                    form.Footer += cp.Html5.H5("data-body");
                     {
                         string sample = "";
-                        sample += "<span data-mustache-addon=\"content_box\">content</span>";
+                        sample += "<body><span data-body>This content will be included without the span tag</span> and this copy will not be imported</body>";
+                        sample += "\nThis content will be included without the span tag";
+                        string indent = "";
+                        indent += cp.Html5.P("If a data-body attribute is found, only the html within that element will be included. If no data-body is used, the content of the entire html body tag is imported.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        form.Footer += cp.Html5.Div(indent, "ml-4");
+                    }
+                    //
+                    form.Footer += cp.Html5.H5("data-addon");
+                    {
+                        string sample = "";
+                        sample += "<span data-addon=\"content_box\">content</span>";
                         sample += "\n<span>{% \"content box\" %}</span>";
                         string indent = "";
                         indent += cp.Html5.P("NOTE: If the addon name contains spaces, replace each space with a _ instead. Ex. content box would be content_box. Replace the inner content of the html tag with the addon after the Mustache Addon tag.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        form.Footer += cp.Html5.Div(indent, "ml-4");
+                    }
+                    //
+                    form.Footer += cp.Html5.H5("data-delete");
+                    {
+                        string sample = "";
+                        sample += "<p>This is in the layout.<span data-delete>This is not.</span></p>";
+                        sample += "\n<p>This is in the layout.</p>";
+                        string indent = "";
+                        indent += cp.Html5.P("Delete the tag that contains this class, and all child tags.");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }

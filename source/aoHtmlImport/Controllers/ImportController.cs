@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
@@ -104,24 +105,37 @@ namespace Contensive.Addons.HtmlImport {
                 //
                 // -- get body
                 if (importTypeId!=4) {
-                    HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
-                    if (bodyNode == null) {
-                        //
-                        // -- no body found, use entire document
-                        returnStatusMessage += cp.Html.p("The content does not include a <body> tag so the entire document will be imported.");
-                    } else {
-                        //
-                        // -- use body
-                        string body = bodyNode.InnerHtml;
-                        if (string.IsNullOrWhiteSpace(body)) {
-                            //
-                            // -- body tag not found, import the whole document
-                            returnStatusMessage += cp.Html.p("The content includes a <body> tag, but the body tag is empty.");
-                            return false;
+                    //
+                    // -- find the data-body or body tag
+                    {
+                        string xPath = "//*[@data-body]";
+                        HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
+                        if (nodeList != null) {
+                            htmlDoc.LoadHtml(nodeList.First().InnerHtml);
+                            //foreach (HtmlNode node in nodeList) {
+                            //    node.ParentNode.RemoveChild(node);
+                            //}
+                        } else {
+                            HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
+                            if (bodyNode == null) {
+                                //
+                                // -- no body found, use entire document
+                                returnStatusMessage += cp.Html.p("The content does not include a data-body attribute or <body> tag so the entire document will be imported.");
+                            } else {
+                                //
+                                // -- use body
+                                string body = bodyNode.InnerHtml;
+                                if (string.IsNullOrWhiteSpace(body)) {
+                                    //
+                                    // -- body tag not found, import the whole document
+                                    returnStatusMessage += cp.Html.p("The content does not include a data-body attribute and the body tag is empty.");
+                                    return false;
+                                }
+                                //
+                                // -- body found, set the htmlDoc to the body
+                                htmlDoc.LoadHtml(body);
+                            }
                         }
-                        //
-                        // -- body found, set the htmlDoc to the body
-                        htmlDoc.LoadHtml(body);
                     }
                 }
                 //
