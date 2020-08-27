@@ -88,13 +88,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.cs" />
-    <Compile Include="Controllers\MustacheAddonController.cs" />
+    <Compile Include="Controllers\DataAddonController.cs" />
+    <Compile Include="Controllers\DataLayoutController.cs" />
     <Compile Include="Controllers\MustacheValueController.cs" />
     <Compile Include="Controllers\trash\MustacheTruthyController.cs" />
     <Compile Include="Controllers\MustacheInvertedSectionController.cs" />
     <Compile Include="Controllers\MustacheSectionController.cs" />
     <Compile Include="Controllers\MustacheVariableController.cs" />
-    <Compile Include="Controllers\MustacheDeleteController.cs" />
+    <Compile Include="Controllers\DataDeleteController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\genericController.cs" />

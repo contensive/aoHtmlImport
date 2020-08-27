@@ -13,7 +13,7 @@ namespace Contensive.Addons.HtmlImport {
         /// <summary>
         /// process delete (see tool form for details)
         /// </summary>
-        public static class MustacheDeleteController {
+        public static class DataDeleteController {
             //
             public static void process(HtmlDocument htmlDoc) {
                 //

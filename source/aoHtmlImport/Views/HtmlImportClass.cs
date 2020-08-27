@@ -6,6 +6,7 @@ using Contensive.Addons.HtmlImport.Controllers;
 using Contensive.Addons.HtmlImport.Models;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
+using static Contensive.Addons.HtmlImport.Constants;
 
 namespace Contensive.Addons.HtmlImport {
     namespace Views {
@@ -35,11 +36,12 @@ namespace Contensive.Addons.HtmlImport {
                             // -- upload failed
                             form.FailMessage = "Upload failed";
                         } else {
-                            string statusMessage = string.Empty;
-                            if (!ImportController.processImportFile(cp, uploadFolderPath + uploadFile, cp.Doc.GetInteger("importTypeId"), cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref statusMessage)) {
-                                form.FailMessage = statusMessage;
+                            var userMessageList = new List<string>();
+                            ImporttypeEnum importTypeId = (ImporttypeEnum)cp.Doc.GetInteger("importTypeId");
+                            if (!ImportController.processImportFile(cp, uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
+                                form.FailMessage = "Error<br><br>" + string.Join("<br>", userMessageList) ;
                             } else {
-                                form.SuccessMessage = "Success";
+                                form.SuccessMessage = "Success<br><br>" + string.Join("<br>", userMessageList); 
                             }
                         }
                         cp.TempFiles.DeleteFolder(uploadFolderPath);
@@ -192,7 +194,18 @@ namespace Contensive.Addons.HtmlImport {
                         sample += "<body><span data-body>This content will be included without the span tag</span> and this copy will not be imported</body>";
                         sample += "\nThis content will be included without the span tag";
                         string indent = "";
-                        indent += cp.Html5.P("If a data-body attribute is found, only the html within that element will be included. If no data-body is used, the content of the entire html body tag is imported.");
+                        indent += cp.Html5.P("The data-body attribute is used to locate the html to be processed. Anything outside of this region will not be processed. If a data-body attribute is found, only the html within that element will be included. If no data-body is used, the content of the entire html body tag is imported.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        form.Footer += cp.Html5.Div(indent, "ml-4");
+                    }
+                    //
+                    form.Footer += cp.Html5.H5("data-layout");
+                    {
+                        string sample = "";
+                        sample += "<body><span data-layout=\"New-Site-Header\">This content will be saved to the layout named 'New-Site-Header' without the span tag</span> and this copy will not be imported</body>";
+                        sample += "\nThis content will be included without the span tag";
+                        string indent = "";
+                        indent += cp.Html5.P("If a data-layout attribute is found, the html within that element will be saved to the named layout record.");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         form.Footer += cp.Html5.Div(indent, "ml-4");
                     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Contensive.Addons.HtmlImport.Controllers {
-    public class MustacheAddonController {
+    public class DataAddonController {
         //
         public static void process(HtmlDocument htmlDoc) {
             {

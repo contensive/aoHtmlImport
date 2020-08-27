@@ -1,11 +1,13 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Contensive.BaseClasses;
 using Contensive.Models.Db;
 using HtmlAgilityPack;
+using static Contensive.Addons.HtmlImport.Constants;
 
 namespace Contensive.Addons.HtmlImport {
     namespace Controllers {
@@ -21,9 +23,8 @@ namespace Contensive.Addons.HtmlImport {
             /// <param name="cp"></param>
             /// <param name="htmlSourceTempPathFilename"></param>
             /// <returns></returns>
-            public static bool processImportFile(CPBaseClass cp, string htmlSourceTempPathFilename, int importTypeId , int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
+            public static bool processImportFile(CPBaseClass cp, string htmlSourceTempPathFilename, ImporttypeEnum importTypeId , int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref List<string> userMessageList) {
                 try {
-                    returnStatusMessage = "";
                     HtmlDocument htmlDoc = new HtmlDocument();
                     if (System.IO.Path.GetExtension(htmlSourceTempPathFilename).Equals(".zip")) {
                         //
@@ -40,22 +41,25 @@ namespace Contensive.Addons.HtmlImport {
                     bool htmlFileFound = false;
                     foreach (var file in cp.TempFiles.FileList(tempPath)) {
                         if (file.Extension.ToLowerInvariant().Equals(".html")) {
+                            //
+                            // -- process each html file one at a time
+                            userMessageList.Add("Processing file " + cp.CdnFiles.GetFilename(file.Name));
                             string newRecordName = Path.GetFileNameWithoutExtension(file.Name);
                             htmlFileFound = true;
                             htmlDoc.Load(cp.TempFiles.PhysicalFilePath + tempPath + file.Name, Encoding.UTF8);
                             if (htmlDoc == null) {
                                 //
                                 // -- body tag not found, import the whole document
-                                returnStatusMessage += cp.Html.p("The uploaded file is empty.");
+                                userMessageList.Add("The file is empty.");
                                 return false;
                             }
-                            if (!processHtmlDoc(cp, htmlDoc, importTypeId, newRecordName, layoutId, pageTemplateId, emailTemplateId, emailId, ref returnStatusMessage)) {
+                            if (!processHtmlDoc(cp, htmlDoc, importTypeId, newRecordName, layoutId, pageTemplateId, emailTemplateId, emailId, ref userMessageList)) {
                                 return false;
                             }
                         }
                     }
                     if (!htmlFileFound) {
-                        returnStatusMessage += cp.Html.p("No files were found with .HTML extension. Only files with .HTML extensions are imported.");
+                        userMessageList.Add("No files were found with .HTML extension. Only files with .HTML extensions are imported.");
                         return false;
                     }
                     return true;
@@ -68,7 +72,7 @@ namespace Contensive.Addons.HtmlImport {
             //
             //====================================================================================================
             //
-            public static bool processHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, int importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref string returnStatusMessage) {
+            public static bool processHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, ImporttypeEnum importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref List<string> userMessageList) {
                 //
                 // -- search for meta name=template|layout content=recordaname
                 string layoutRecordName = string.Empty;
@@ -103,24 +107,24 @@ namespace Contensive.Addons.HtmlImport {
                     }
                 }
                 //
-                // -- get body
-                if (importTypeId!=4) {
+                // -- get body (except email template because it uses the full html document
+                if (importTypeId!=ImporttypeEnum.EmailTemplate) {
                     //
                     // -- find the data-body or body tag
                     {
                         string xPath = "//*[@data-body]";
                         HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                         if (nodeList != null) {
+                            //
+                            // -- import data-body
+                            userMessageList.Add("Body set by data-body attribute.");
                             htmlDoc.LoadHtml(nodeList.First().InnerHtml);
-                            //foreach (HtmlNode node in nodeList) {
-                            //    node.ParentNode.RemoveChild(node);
-                            //}
                         } else {
                             HtmlNode bodyNode = htmlDoc.DocumentNode.SelectSingleNode("//body");
                             if (bodyNode == null) {
                                 //
                                 // -- no body found, use entire document
-                                returnStatusMessage += cp.Html.p("The content does not include a data-body attribute or <body> tag so the entire document will be imported.");
+                                userMessageList.Add("No Body found, entire document imported.");
                             } else {
                                 //
                                 // -- use body
@@ -128,38 +132,42 @@ namespace Contensive.Addons.HtmlImport {
                                 if (string.IsNullOrWhiteSpace(body)) {
                                     //
                                     // -- body tag not found, import the whole document
-                                    returnStatusMessage += cp.Html.p("The content does not include a data-body attribute and the body tag is empty.");
+                                    userMessageList.Add("The content does not include a data-body attribute and the body tag is empty.");
                                     return false;
                                 }
                                 //
                                 // -- body found, set the htmlDoc to the body
+                                userMessageList.Add("Html Body imported.");
                                 htmlDoc.LoadHtml(body);
                             }
                         }
                     }
                 }
                 //
-                // -- process mustache nodes
-                MustacheDeleteController.process(htmlDoc);
+                // -- process data-layout nodes. Within each node found, run all other controllers inddividually then save
+                DataLayoutController.process(cp, htmlDoc, ref userMessageList);
+                //
+                // -- process the body
+                DataDeleteController.process(htmlDoc);
                 MustacheVariableController.process(htmlDoc);
                 MustacheSectionController.process(htmlDoc);
                 MustacheTruthyController.process(htmlDoc);
                 MustacheInvertedSectionController.process(htmlDoc);
                 MustacheValueController.process(htmlDoc);
-                MustacheAddonController.process(htmlDoc);
+                DataAddonController.process(htmlDoc);
                 //
                 // -- save manual layout
                 LayoutModel layout = null;
                 {
-                    if( importTypeId.Equals(2) && layoutId.Equals(0) & string.IsNullOrWhiteSpace(layoutRecordName) ) {
+                    if( importTypeId.Equals(ImporttypeEnum.LayoutForAddon) && layoutId.Equals(0) & string.IsNullOrWhiteSpace(layoutRecordName) ) {
                         //
                         // -- layout type but no layout selected, and no layout imported, use filename
                         layoutRecordName = newRecordName;
                     }
-                    if (!layoutId.Equals(0)) {
+                    if (importTypeId.Equals(ImporttypeEnum.LayoutForAddon) &&  !layoutId.Equals(0)) {
                         layout = DbBaseModel.create<LayoutModel>(cp, layoutId);
                         if (layout == null) {
-                            returnStatusMessage += cp.Html.p("The layout selected could not be found.");
+                            userMessageList.Add("The layout selected could not be found.");
                             return false;
                         }
                         layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
@@ -175,25 +183,27 @@ namespace Contensive.Addons.HtmlImport {
                         }
                         layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
                         layout.save(cp);
+                        userMessageList.Add("Saved Layout '" + layoutRecordName + "'.");
                     }
                 }
                 //
                 // -- save page template
                 PageTemplateModel pageTemplate = null;
                 {
-                    if (importTypeId.Equals(3) && pageTemplateId.Equals(0) & string.IsNullOrWhiteSpace(pageTemplateRecordName)) {
+                    if (importTypeId.Equals(ImporttypeEnum.PageTemplate) && pageTemplateId.Equals(0) & string.IsNullOrWhiteSpace(pageTemplateRecordName)) {
                         //
                         // -- layout type but no layout selected, and no layout imported, use filename
                         pageTemplateRecordName = newRecordName;
                     }
-                    if (!pageTemplateId.Equals(0)) {
+                    if (importTypeId.Equals(ImporttypeEnum.PageTemplate) &&  !pageTemplateId.Equals(0)) {
                         pageTemplate = DbBaseModel.create<PageTemplateModel>(cp, pageTemplateId);
                         if (pageTemplate == null) {
-                            returnStatusMessage += cp.Html.p("The template selected could not be found.");
+                            userMessageList.Add("The template selected could not be found.");
                             return false;
                         }
                         pageTemplate.bodyHTML = htmlDoc.DocumentNode.OuterHtml;
                         pageTemplate.save(cp);
+                        userMessageList.Add("Saved Page Template '" + pageTemplateRecordName + "'.");
                     }
                     //
                     // -- save meta template
@@ -212,21 +222,22 @@ namespace Contensive.Addons.HtmlImport {
                         //
                         pageTemplate.bodyHTML = bodyhtml;
                         pageTemplate.save(cp);
+                        userMessageList.Add("Saved Page Template '" + pageTemplateRecordName + "'.");
                     }
                 }
                 //
                 // -- save email template
                 EmailTemplateModel emailTemplate = null;
                 {
-                    if (importTypeId.Equals(4) && emailTemplateId.Equals(0) & string.IsNullOrWhiteSpace(emailTemplateRecordName)) {
+                    if (importTypeId.Equals(ImporttypeEnum.EmailTemplate) && emailTemplateId.Equals(0) & string.IsNullOrWhiteSpace(emailTemplateRecordName)) {
                         //
                         // --  type but no layout selected, and no layout imported, use filename
                         emailTemplateRecordName = newRecordName;
                     }
-                    if (!emailTemplateId.Equals(0)) {
+                    if (importTypeId.Equals(ImporttypeEnum.EmailTemplate) && !emailTemplateId.Equals(0)) {
                         emailTemplate = DbBaseModel.create<EmailTemplateModel>(cp, emailTemplateId);
                         if (emailTemplate == null) {
-                            returnStatusMessage += cp.Html.p("The template selected could not be found.");
+                            userMessageList.Add("The template selected could not be found.");
                             return false;
                         }
                         emailTemplate.bodyHTML = htmlDoc.DocumentNode.OuterHtml;
@@ -242,6 +253,7 @@ namespace Contensive.Addons.HtmlImport {
                         }
                         emailTemplate.bodyHTML = htmlDoc.DocumentNode.OuterHtml;
                         emailTemplate.save(cp);
+                        userMessageList.Add("Saved Email Template '" + emailTemplateRecordName + "'.");
                     }
                 }
                 //
@@ -256,11 +268,12 @@ namespace Contensive.Addons.HtmlImport {
                     if (!emailId.Equals(0)) {
                         email = DbBaseModel.create<EmailModel>(cp, emailId);
                         if (email == null) {
-                            returnStatusMessage += cp.Html.p("The email selected could not be found.");
+                            userMessageList.Add("The email selected could not be found.");
                             return false;
                         }
                         email.copyFilename.content = htmlDoc.DocumentNode.OuterHtml;
                         email.save(cp);
+                        userMessageList.Add("Saved Email '" + emailRecordName + "'.");
                     }
                     //
                     // -- save meta template
@@ -272,13 +285,8 @@ namespace Contensive.Addons.HtmlImport {
                         }
                         email.copyFilename.content = htmlDoc.DocumentNode.OuterHtml;
                         email.save(cp);
+                        userMessageList.Add("Saved Email '" + emailRecordName + "'.");
                     }
-                }
-                //
-                // -- I had to do this quickly, refactor later
-                if ((layout == null) && (pageTemplate == null) && (emailTemplate == null) && (email == null)) {
-                    returnStatusMessage += cp.Html.p("No template or layout name could be determined. If not selected, a target must be included as a meta tag in the html document (&lt;meta name=\"layout\" content=\"LayoutName\"&gt; or &lt;meta name=\"template\" content=\"TemplateName\"&gt;)");
-                    return false;
                 }
                 //
                 return true;
