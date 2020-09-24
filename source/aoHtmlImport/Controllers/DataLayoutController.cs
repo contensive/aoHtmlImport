@@ -16,7 +16,7 @@ namespace Contensive.Addons.HtmlImport {
         /// </summary>
         public static class DataLayoutController {
             //
-            public static void process(CPBaseClass cp, HtmlDocument htmlDoc, ref List<string> userMessageList ) {
+            public static void process(CPBaseClass cp, HtmlDocument htmlDoc, ref List<string> userMessageList) {
                 //
                 // -- data attribute
                 {
@@ -38,7 +38,7 @@ namespace Contensive.Addons.HtmlImport {
                             MustacheTruthyController.process(layoutDoc);
                             MustacheInvertedSectionController.process(layoutDoc);
                             MustacheValueController.process(layoutDoc);
-                            DataAddonController.process(layoutDoc);
+                            DataAddonController.process(cp, layoutDoc);
                             //
                             // -- save the alyout
                             LayoutModel layout = null;

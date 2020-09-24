@@ -23,7 +23,7 @@ namespace Contensive.Addons.HtmlImport {
             /// <param name="cp"></param>
             /// <param name="htmlSourceTempPathFilename"></param>
             /// <returns></returns>
-            public static bool processImportFile(CPBaseClass cp, string htmlSourceTempPathFilename, ImporttypeEnum importTypeId , int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref List<string> userMessageList) {
+            public static bool processImportFile(CPBaseClass cp, string htmlSourceTempPathFilename, ImporttypeEnum importTypeId, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref List<string> userMessageList) {
                 try {
                     HtmlDocument htmlDoc = new HtmlDocument();
                     if (System.IO.Path.GetExtension(htmlSourceTempPathFilename).Equals(".zip")) {
@@ -108,7 +108,7 @@ namespace Contensive.Addons.HtmlImport {
                 }
                 //
                 // -- get body (except email template because it uses the full html document
-                if (importTypeId!=ImporttypeEnum.EmailTemplate) {
+                if (importTypeId != ImporttypeEnum.EmailTemplate) {
                     //
                     // -- find the data-body or body tag
                     {
@@ -154,17 +154,17 @@ namespace Contensive.Addons.HtmlImport {
                 MustacheTruthyController.process(htmlDoc);
                 MustacheInvertedSectionController.process(htmlDoc);
                 MustacheValueController.process(htmlDoc);
-                DataAddonController.process(htmlDoc);
+                DataAddonController.process(cp, htmlDoc);
                 //
                 // -- save manual layout
                 LayoutModel layout = null;
                 {
-                    if( importTypeId.Equals(ImporttypeEnum.LayoutForAddon) && layoutId.Equals(0) & string.IsNullOrWhiteSpace(layoutRecordName) ) {
+                    if (importTypeId.Equals(ImporttypeEnum.LayoutForAddon) && layoutId.Equals(0) & string.IsNullOrWhiteSpace(layoutRecordName)) {
                         //
                         // -- layout type but no layout selected, and no layout imported, use filename
                         layoutRecordName = newRecordName;
                     }
-                    if (importTypeId.Equals(ImporttypeEnum.LayoutForAddon) &&  !layoutId.Equals(0)) {
+                    if (importTypeId.Equals(ImporttypeEnum.LayoutForAddon) && !layoutId.Equals(0)) {
                         layout = DbBaseModel.create<LayoutModel>(cp, layoutId);
                         if (layout == null) {
                             userMessageList.Add("The layout selected could not be found.");
@@ -195,7 +195,7 @@ namespace Contensive.Addons.HtmlImport {
                         // -- layout type but no layout selected, and no layout imported, use filename
                         pageTemplateRecordName = newRecordName;
                     }
-                    if (importTypeId.Equals(ImporttypeEnum.PageTemplate) &&  !pageTemplateId.Equals(0)) {
+                    if (importTypeId.Equals(ImporttypeEnum.PageTemplate) && !pageTemplateId.Equals(0)) {
                         pageTemplate = DbBaseModel.create<PageTemplateModel>(cp, pageTemplateId);
                         if (pageTemplate == null) {
                             userMessageList.Add("The template selected could not be found.");
