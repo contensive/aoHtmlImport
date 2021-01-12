@@ -68,19 +68,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ContensiveDbModels, Version=4.1.2.0, Culture=neutral, PublicKeyToken=c014b235a9c6bb22, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.DbModels.20.10.5.1\lib\net45\ContensiveDbModels.dll</HintPath>
+      <HintPath>..\packages\Contensive.DbModels.20.12.6.18\lib\net45\ContensiveDbModels.dll</HintPath>
     </Reference>
     <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.CPBaseClass.20.10.5.1\lib\net45\CPBase.dll</HintPath>
+      <HintPath>..\packages\Contensive.CPBaseClass.20.12.6.18\lib\net45\CPBase.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.18.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.18\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.29.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.29\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Nustache.Core, Version=1.16.0.10, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
       <HintPath>..\packages\Nustache.1.16.0.10\lib\net20\Nustache.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PortalFramework, Version=20.9.21.3, Culture=neutral, PublicKeyToken=df99052d01433f97, processorArchitecture=MSIL">
+      <HintPath>..\packages\Contensive.PortalApi.20.12.30.1\lib\net472\PortalFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

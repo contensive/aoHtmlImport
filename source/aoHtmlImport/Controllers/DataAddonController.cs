@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Contensive.Addons.HtmlImport.Controllers {
-    public class DataAddonController {
+    public static class DataAddonController {
         //
         public static void process(CPBaseClass cp, HtmlDocument htmlDoc) {
             string content = "";
