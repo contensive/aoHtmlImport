@@ -31,6 +31,23 @@ namespace Contensive.Addons.HtmlImport.Controllers {
                                 lastClass = className;
                             }
                         }
+
+
+                        //
+                        // -- if the addon does not exist, create it with the content removed
+                        if (!string.IsNullOrEmpty(addonName) && !string.IsNullOrEmpty(content)) {
+                            Contensive.Models.Db.AddonModel addon = Contensive.Models.Db.DbBaseModel.createByUniqueName<Contensive.Models.Db.AddonModel>(cp, addonName);
+                            if (addon == null) {
+                                addon = Contensive.Models.Db.DbBaseModel.addDefault<Contensive.Models.Db.AddonModel>(cp);
+                                if (addon != null) {
+                                    addon.name = addonName;
+                                    addon.copyText = content;
+                                    addon.save(cp);
+                                }
+                            }
+                        }
+
+
                     }
                 }
 
@@ -45,6 +62,23 @@ namespace Contensive.Addons.HtmlImport.Controllers {
                         addonName = node.Attributes["data-mustache-addon"]?.Value;
                         node.Attributes.Remove("data-mustache-addon");
                         node.InnerHtml = "{% \"" + addonName + "\" %}";
+
+
+
+
+                        //
+                        // -- if the addon does not exist, create it with the content removed
+                        if (!string.IsNullOrEmpty(addonName) && !string.IsNullOrEmpty(content)) {
+                            Contensive.Models.Db.AddonModel addon = Contensive.Models.Db.DbBaseModel.createByUniqueName<Contensive.Models.Db.AddonModel>(cp, addonName);
+                            if (addon == null) {
+                                addon = Contensive.Models.Db.DbBaseModel.addDefault<Contensive.Models.Db.AddonModel>(cp);
+                                if (addon != null) {
+                                    addon.name = addonName;
+                                    addon.copyText = content;
+                                    addon.save(cp);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -59,22 +93,29 @@ namespace Contensive.Addons.HtmlImport.Controllers {
                         node.Attributes.Remove("data-addon");
                         content = node.InnerHtml;
                         node.InnerHtml = "{% \"" + addonName + "\" %}";
+
+
+
+
+                        //
+                        // -- if the addon does not exist, create it with the content removed
+                        if (!string.IsNullOrEmpty(addonName) && !string.IsNullOrEmpty(content)) {
+                            Contensive.Models.Db.AddonModel addon = Contensive.Models.Db.DbBaseModel.createByUniqueName<Contensive.Models.Db.AddonModel>(cp, addonName);
+                            if (addon == null) {
+                                addon = Contensive.Models.Db.DbBaseModel.addDefault<Contensive.Models.Db.AddonModel>(cp);
+                                if (addon != null) {
+                                    addon.name = addonName;
+                                    addon.copyText = content;
+                                    addon.save(cp);
+                                }
+                            }
+                        }
                     }
                 }
             }
-            //
-            // -- if the addon does not exist, create it with the content removed
-            if (!string.IsNullOrEmpty(addonName) && !string.IsNullOrEmpty(content)) {
-                Contensive.Models.Db.AddonModel addon = Contensive.Models.Db.DbBaseModel.createByUniqueName<Contensive.Models.Db.AddonModel>(cp, addonName);
-                if (addon == null) {
-                    addon = Contensive.Models.Db.DbBaseModel.addDefault<Contensive.Models.Db.AddonModel>(cp);
-                    if (addon != null) {
-                        addon.name = addonName;
-                        addon.copyText = content;
-                        addon.save(cp);
-                    }
-                }
-            }
+
+
+
         }
     }
 }
