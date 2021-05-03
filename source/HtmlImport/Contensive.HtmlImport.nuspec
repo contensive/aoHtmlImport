@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Contensive.HtmlImport</id>
+        <version>21.5.3.0</version>
+        <title>Contensive HtmlImport Process</title>
+        <authors>Contensive</authors>
+        <owners>Contensive</owners>
+        <licenseUrl>http://Contensive.io/</licenseUrl>
+        <projectUrl>http://Contensive.io/</projectUrl>
+        <iconUrl>http://Contensive.io/img/ContensiveNuGetLogo.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Exposes a process that implements the Html Import Tool process.</description>
+        <releaseNotes></releaseNotes>
+        <copyright>Copyright 2021</copyright>
+        <tags>Contensive,htmlimport</tags>
+        <dependencies>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Debug\HtmlImport.dll" target="lib\net472\HtmlImport.dll" />
+    </files>
+</package>
