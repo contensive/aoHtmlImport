@@ -12,7 +12,7 @@ rem
 
 rem all paths are relative to the git scripts folder
 
-set appName=app200509
+set appName=build210423
 set majorVersion=5
 set minorVersion=1
 set collectionName=Html Import
@@ -75,6 +75,8 @@ del "%collectionPath%"\*.config
 
 rem copy bin folder assemblies to collection folder
 copy "%binPath%*.dll" "%collectionPath%"
+
+pause
 
 rem create new collection zip file
 c:

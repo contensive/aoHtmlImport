@@ -1,19 +1,14 @@
-﻿
-using System;
+﻿using HtmlAgilityPack;
 using System.Collections.Generic;
-using Contensive.BaseClasses;
-using HtmlAgilityPack;
-using static Contensive.Addons.HtmlImport.Constants;
-using static Newtonsoft.Json.JsonConvert;
 
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     namespace Controllers {
         // 
         // ====================================================================================================
         /// <summary>
         /// process truthy (see tool form for details)
         /// </summary>
-        public class MustacheTruthyController {
+        public static class MustacheTruthyController {
             //
             public static void process(HtmlDocument htmlDoc) {
                 string xPath = "//*[contains(@class,'mustache-truthy')]";

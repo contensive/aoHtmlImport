@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aoHtmlImport", "aoHtmlImport\aoHtmlImport.csproj", "{2FB04A0F-844C-4010-B011-BE8A90960735}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aoHtmlImportTool", "aoHtmlImport\aoHtmlImportTool.csproj", "{2FB04A0F-844C-4010-B011-BE8A90960735}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aoHtmlImportTests", "aoHtmlImportTests\aoHtmlImportTests.csproj", "{87587AEC-1080-46F4-BE12-8F6243AA97C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlImport", "HtmlImport\HtmlImport.csproj", "{BA2E9A18-9880-4EA9-B3F7-F502AA9A8077}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{87587AEC-1080-46F4-BE12-8F6243AA97C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87587AEC-1080-46F4-BE12-8F6243AA97C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87587AEC-1080-46F4-BE12-8F6243AA97C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA2E9A18-9880-4EA9-B3F7-F502AA9A8077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA2E9A18-9880-4EA9-B3F7-F502AA9A8077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA2E9A18-9880-4EA9-B3F7-F502AA9A8077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA2E9A18-9880-4EA9-B3F7-F502AA9A8077}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

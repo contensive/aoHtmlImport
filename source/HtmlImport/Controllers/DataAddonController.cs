@@ -1,12 +1,8 @@
 ﻿using Contensive.BaseClasses;
 using HtmlAgilityPack;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Contensive.Addons.HtmlImport.Controllers {
+namespace Contensive.HtmlImport.Controllers {
     public static class DataAddonController {
         //
         public static void process(CPBaseClass cp, HtmlDocument htmlDoc) {

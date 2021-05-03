@@ -1,15 +1,15 @@
 ﻿
+using Contensive.BaseClasses;
+using Contensive.Models.Db;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Contensive.BaseClasses;
-using Contensive.Models.Db;
-using HtmlAgilityPack;
-using static Contensive.Addons.HtmlImport.Constants;
+using static Contensive.HtmlImport.Constants;
 
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     namespace Controllers {
         public static class ImportController {
             //
@@ -72,7 +72,7 @@ namespace Contensive.Addons.HtmlImport {
             //
             //====================================================================================================
             //
-            public static bool processHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, ImporttypeEnum importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref List<string> userMessageList) {
+            private static bool processHtmlDoc(CPBaseClass cp, HtmlDocument htmlDoc, ImporttypeEnum importTypeId, string newRecordName, int layoutId, int pageTemplateId, int emailTemplateId, int emailId, ref List<string> userMessageList) {
                 //
                 // -- search for meta name=template|layout content=recordaname
                 string layoutRecordName = string.Empty;
@@ -300,7 +300,7 @@ namespace Contensive.Addons.HtmlImport {
             /// <param name="cp"></param>
             /// <param name="tempPath"></param>
             /// <param name="wwwPath"></param>
-            public static void copyNonHtmlFilesToWWW(CPBaseClass cp, string tempPath, string wwwPath) {
+            private static void copyNonHtmlFilesToWWW(CPBaseClass cp, string tempPath, string wwwPath) {
                 try {
                     foreach (var folder in cp.TempFiles.FolderList(tempPath)) {
                         string folderPath = folder.Name + "\\";

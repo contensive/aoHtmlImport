@@ -1,5 +1,5 @@
 ﻿
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     public static class Constants {
         // 
         // -- sample

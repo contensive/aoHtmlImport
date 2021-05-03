@@ -1,24 +1,18 @@
-﻿
-using System;
+﻿using HtmlAgilityPack;
 using System.Collections.Generic;
-using Contensive.BaseClasses;
-using HtmlAgilityPack;
-using static Contensive.Addons.HtmlImport.Constants;
-using static Newtonsoft.Json.JsonConvert;
 
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     namespace Controllers {
         // 
         // ====================================================================================================
         /// <summary>
-        /// process loop (see tool form for details)
+        /// process falsey (see tool form for details)
         /// </summary>
-        public class MustacheSectionController {
+        public class MustacheInvertedSectionController {
+            //
             public static void process(HtmlDocument htmlDoc) {
                 {
-                    //
-                    // -- legacy class - mustache-loop
-                    string xPath = "//*[contains(@class,'mustache-loop')]";
+                    string xPath = "//*[contains(@class,'mustache-falsey')]";
                     HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                     if (nodeList != null) {
                         foreach (HtmlNode node in nodeList) {
@@ -26,17 +20,17 @@ namespace Contensive.Addons.HtmlImport {
                             if (classList != null) {
                                 string lastClass = "";
                                 foreach (string className in classList) {
-                                    if (lastClass.Equals("mustache-loop")) {
+                                    if (lastClass.Equals("mustache-falsey")) {
                                         node.RemoveClass(lastClass);
                                         node.RemoveClass(className);
                                         var listClone = node.Clone();
                                         //HtmlNode.CreateNode(node.InnerHtml);
                                         node.ChildNodes.Clear();
-                                        node.AppendChild(HtmlNode.CreateNode("{{#" + className + "}}"));
+                                        node.AppendChild(HtmlNode.CreateNode("{{{^" + className + "}}}"));
                                         foreach (HtmlNode listChild in listClone.ChildNodes) {
                                             node.AppendChild(listChild);
                                         }
-                                        node.AppendChild(HtmlNode.CreateNode("{{/" + className + "}}"));
+                                        node.AppendChild(HtmlNode.CreateNode("{{{/" + className + "}}}"));
                                         break;
                                     }
                                     lastClass = className;
@@ -47,16 +41,16 @@ namespace Contensive.Addons.HtmlImport {
                 }
                 {
                     //
-                    // -- data-mustache-section
-                    string xPath = "//*[@data-mustache-section]";
+                    // -- data-mustache-inverted-section
+                    string xPath = "//*[@data-mustache-inverted-section]";
                     HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                     if (nodeList != null) {
                         foreach (HtmlNode node in nodeList) {
                             var listClone = node.Clone();
-                            string sectionName = node.Attributes["data-mustache-section"].Value;
-                            node.Attributes.Remove("data-mustache-section");
+                            string sectionName = node.Attributes["data-mustache-inverted-section"].Value;
+                            node.Attributes.Remove("data-mustache-inverted-section");
                             node.ChildNodes.Clear();
-                            node.AppendChild(HtmlNode.CreateNode("{{#" + sectionName + "}}"));
+                            node.AppendChild(HtmlNode.CreateNode("{{^" + sectionName + "}}"));
                             foreach (HtmlNode listChild in listClone.ChildNodes) {
                                 node.AppendChild(listChild);
                             }

@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     namespace Controllers {
         public static class genericController {
             //

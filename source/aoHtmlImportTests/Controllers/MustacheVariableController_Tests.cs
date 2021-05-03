@@ -17,7 +17,7 @@ namespace Contensive.Addons.HtmlImport.Controllers.Tests {
             //
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(test1Src);
-            Controllers.MustacheVariableController.process(htmlDoc);
+            Contensive.HtmlImport.Controllers.MustacheVariableController.process(htmlDoc);
             string test1Result = htmlDoc.DocumentNode.OuterHtml;
             //
             Assert.AreEqual(test1Expect, test1Result);
@@ -31,7 +31,7 @@ namespace Contensive.Addons.HtmlImport.Controllers.Tests {
             //
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(test1Src);
-            Controllers.MustacheVariableController.process(htmlDoc);
+            Contensive.HtmlImport.Controllers.MustacheVariableController.process(htmlDoc);
             string test1Result = htmlDoc.DocumentNode.OuterHtml;
             //
             Assert.AreEqual(test1Expect, test1Result);

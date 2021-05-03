@@ -1,11 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Contensive.Addons.HtmlImport.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Contensive.Addons.HtmlImport.Controllers.Tests {
     [TestClass()]
@@ -17,7 +11,7 @@ namespace Contensive.Addons.HtmlImport.Controllers.Tests {
             //
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(test1Src);
-            Controllers.MustacheTruthyController.process(htmlDoc);
+            Contensive.HtmlImport.Controllers.MustacheTruthyController.process(htmlDoc);
             string test1Result = htmlDoc.DocumentNode.OuterHtml;
             //
             Assert.AreEqual(test1Expect, test1Result);

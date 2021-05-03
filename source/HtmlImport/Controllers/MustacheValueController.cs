@@ -1,11 +1,8 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿
+using HtmlAgilityPack;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Contensive.Addons.HtmlImport.Controllers {
+namespace Contensive.HtmlImport.Controllers {
     public class MustacheValueController {
         //
         public static void process(HtmlDocument htmlDoc) {

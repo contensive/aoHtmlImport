@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Contensive.BaseClasses;
-using static Contensive.Addons.HtmlImport.Constants;
-using static Newtonsoft.Json.JsonConvert;
 
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     namespace Controllers {
         // 
         // ====================================================================================================
@@ -57,54 +55,6 @@ namespace Contensive.Addons.HtmlImport {
                 this.cp = cp;
             }
             // 
-            // ====================================================================================================
-            /// <summary>
-            /// get the serialized results
-            /// </summary>
-            /// <returns></returns>
-            public string getResponse() {
-                try {
-                    return SerializeObject(new ResponseClass() {
-                        success = responseErrorList.Count.Equals(0),
-                        nodeList = responseNodeList,
-                        errorList = responseErrorList,
-                        profileList = responseProfileList
-                    });
-                } catch (Exception ex) {
-                    cp.Site.ErrorReport(ex);
-                    throw;
-                }
-            }
-            // 
-            // ====================================================================================================
-            /// <summary>
-            /// The user is not authenticated and this activity is not for anonymous access
-            /// </summary>
-            /// <param name="cp"></param>
-            /// <returns></returns>
-            public static string getResponseUnauthorized(CPBaseClass cp) {
-                cp.Response.SetStatus(HttpErrorEnum.unauthorized + " Unauthorized");
-                return string.Empty;
-            }
-            // 
-            // ====================================================================================================
-            /// <summary>
-            /// The user is authenticated, but their role does not allow this activity
-            /// </summary>
-            /// <param name="cp"></param>
-            /// <returns></returns>
-            public static string getResponseForbidden(CPBaseClass cp) {
-                cp.Response.SetStatus(HttpErrorEnum.forbidden + " Forbidden");
-                return string.Empty;
-            }
-            // 
-            // ====================================================================================================
-            //
-            public static string getResponseServerError(CPBaseClass cp) {
-                cp.Response.SetStatus(HttpErrorEnum.internalServerError + " Internal Server Error");
-                return string.Empty;
-            }
-            // 
             // ==========================================================================================
             // -- Disposable support
             //
@@ -142,18 +92,6 @@ namespace Contensive.Addons.HtmlImport {
         public class ResponseProfileClass {
             public string name;
             public long time;
-        }
-        // 
-        // ====================================================================================================
-        /// <summary>
-        /// remote method top level data structure
-        /// </summary>
-        [Serializable()]
-        public class ResponseClass {
-            public bool success = false;
-            public List<ResponseErrorClass> errorList = new List<ResponseErrorClass>();
-            public List<ResponseNodeClass> nodeList = new List<ResponseNodeClass>();
-            public List<ResponseProfileClass> profileList;
         }
         // 
         // ====================================================================================================

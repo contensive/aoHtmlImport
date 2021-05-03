@@ -1,12 +1,7 @@
 
+using Contensive.BaseClasses;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Contensive.Addons.HtmlImport.Controllers;
-using Contensive.Addons.HtmlImport.Models;
-using Contensive.BaseClasses;
-using Contensive.Models.Db;
-using static Contensive.Addons.HtmlImport.Constants;
 
 namespace Contensive.Addons.HtmlImport {
     namespace Views {
@@ -38,8 +33,8 @@ namespace Contensive.Addons.HtmlImport {
                             tool.failMessage = "Upload failed";
                         } else {
                             var userMessageList = new List<string>();
-                            ImporttypeEnum importTypeId = (ImporttypeEnum)cp.Doc.GetInteger("importTypeId");
-                            if (!ImportController.processImportFile(cp, uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
+                            Contensive.HtmlImport.ImporttypeEnum importTypeId = (Contensive.HtmlImport.ImporttypeEnum)cp.Doc.GetInteger("importTypeId");
+                            if (!Contensive.HtmlImport.Controllers.ImportController.processImportFile(cp, uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
                                 tool.failMessage = "Error<br><br>" + string.Join("<br>", userMessageList) ;
                             } else {
                                 tool.successMessage = "Success<br><br>" + string.Join("<br>", userMessageList); 

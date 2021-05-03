@@ -1,13 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
-using Contensive.BaseClasses;
+﻿using Contensive.BaseClasses;
 using Contensive.Models.Db;
 using HtmlAgilityPack;
-using static Contensive.Addons.HtmlImport.Constants;
-using static Newtonsoft.Json.JsonConvert;
+using System.Collections.Generic;
 
-namespace Contensive.Addons.HtmlImport {
+namespace Contensive.HtmlImport {
     namespace Controllers {
         // 
         // ====================================================================================================
