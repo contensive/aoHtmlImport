@@ -27,8 +27,6 @@ namespace Contensive.HtmlImport.Controllers {
                                 lastClass = className;
                             }
                         }
-
-
                         //
                         // -- if the addon does not exist, create it with the content removed
                         if (!string.IsNullOrEmpty(addonName) && !string.IsNullOrEmpty(content)) {
@@ -42,11 +40,8 @@ namespace Contensive.HtmlImport.Controllers {
                                 }
                             }
                         }
-
-
                     }
                 }
-
             }
             {
                 //
