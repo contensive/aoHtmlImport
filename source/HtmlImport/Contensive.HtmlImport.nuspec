@@ -15,6 +15,7 @@
         <copyright>Copyright 2021</copyright>
         <tags>Contensive,htmlimport</tags>
         <dependencies>
+			<dependency id="HtmlAgilityPack" version="1.11.33" />
         </dependencies>
     </metadata>
     <files>

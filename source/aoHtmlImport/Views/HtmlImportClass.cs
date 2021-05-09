@@ -187,6 +187,17 @@ namespace Contensive.Addons.HtmlImport {
                         tool.footer += cp.Html5.Div(indent, "ml-4");
                     }
                     //
+                    tool.footer += cp.Html5.H5("data-href");
+                    {
+                        string sample = "";
+                        sample += "<body><p><a href=\"MainMenu.html\" data-href=\"{{/mainmenu}}\">Click here to see the main menu.</a></p></body>";
+                        sample += "\nThe html will click to MainMenu.html during design. When imported, it will click to /menumenu.";
+                        string indent = "";
+                        indent += cp.Html5.P("Adds an href to the current element, replacing what is there if it has one.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        tool.footer += cp.Html5.Div(indent, "ml-4");
+                    }
+                    //
                     tool.footer += cp.Html5.H5("data-addon");
                     {
                         string sample = "";
