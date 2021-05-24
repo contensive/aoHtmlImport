@@ -323,6 +323,7 @@ namespace Contensive.HtmlImport {
                 MustacheValueController.process(htmlDoc);
                 DataAddonController.process(cp, htmlDoc);
                 DataHrefController.process(htmlDoc);
+                DataSrcController.process(htmlDoc);
                 //
                 return true;
 

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\DataSrcController.cs" />
     <Compile Include="Controllers\DataHrefController.cs" />
     <Compile Include="Controllers\DataAddonController.cs" />
     <Compile Include="Controllers\DataDeleteController.cs" />
