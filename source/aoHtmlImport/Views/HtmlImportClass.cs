@@ -110,7 +110,7 @@ namespace Contensive.Addons.HtmlImport {
                     {
                         string sample = "";
                         sample += "<p>My name is <span data-mustache-variable=\"firstName\">Sample Name</span>.</p>";
-                        sample += "\n<p>My name is <span>{{firstName}}</span>.</p>";
+                        sample += "\n<p>My name is <span>{{{firstName}}}</span>.</p>";
                         string indent = "";
                         indent += cp.Html5.P("Replace the content of the html tag with a Mustache Basic tag.");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
@@ -160,7 +160,7 @@ namespace Contensive.Addons.HtmlImport {
                         sample += "<p>My example is <span value=\"0\" data-mustache-value=\"id\">content</span>.</p>";
                         sample += "\n<p>My example is <span value=\"{{id}}\">content</span>.</p>";
                         string indent = "";
-                        indent += cp.Html5.P("Replace the value of the html tag with a Mustache Value tag.");
+                        indent += cp.Html5.P("Replace the value of the html tag with a Mustache Value tag .");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         tool.footer += cp.Html5.Div(indent, "ml-4");
                     }
@@ -179,7 +179,7 @@ namespace Contensive.Addons.HtmlImport {
                     tool.footer += cp.Html5.H5("data-layout");
                     {
                         string sample = "";
-                        sample += "<body><span data-layout=\"New-Site-Header\">This content will be saved to the layout named 'New-Site-Header' without the span tag</span> and this copy will not be imported</body>";
+                        sample += "<body><span data-layout=\"New-Site-Header\">This content will be saved to the layout named 'New-Site-Header' without the span tag</span> and this copy will not be imported. If a tag includes both a data-delete and a data-layout, the innter content will be saved to a layout and deleted from the html.</body>";
                         sample += "\nThis content will be included without the span tag";
                         string indent = "";
                         indent += cp.Html5.P("If a data-layout attribute is found, the html within that element will be saved to the named layout record.");
@@ -194,6 +194,17 @@ namespace Contensive.Addons.HtmlImport {
                         sample += "\nThe html will click to MainMenu.html during design. When imported, it will click to /menumenu.";
                         string indent = "";
                         indent += cp.Html5.P("Adds an href to the current element, replacing what is there if it has one.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        tool.footer += cp.Html5.Div(indent, "ml-4");
+                    }
+                    //
+                    tool.footer += cp.Html5.H5("data-src");
+                    {
+                        string sample = "";
+                        sample += "<body><image src=\"placeholder-image.jpg\" data-src=\"{{user-photo}}\"></body>";
+                        sample += "\nThe html will show placeholder-image.jpg. When imported, the src will be the mustache tag {{user-photo}}.";
+                        string indent = "";
+                        indent += cp.Html5.P("Adds an src to the current element, replacing what is there if it has one.");
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         tool.footer += cp.Html5.Div(indent, "ml-4");
                     }

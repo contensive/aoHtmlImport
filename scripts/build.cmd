@@ -23,7 +23,7 @@ rem			-- etc
 rem				(all misc files)
 
 rem -- the application on the local server where this collection will be installed
-set appName=build210423
+set appName=app210521
 
 rem -- name of the collection on the site (should NOT include ao prefix). This is the name as it appears on the navigator
 set collectionName=Html Import
