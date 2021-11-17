@@ -23,7 +23,7 @@ rem			-- etc
 rem				(all misc files)
 
 rem -- the application on the local server where this collection will be installed
-set appName=app210521
+set appName=menucrm
 
 rem -- name of the collection on the site (should NOT include ao prefix). This is the name as it appears on the navigator
 set collectionName=Html Import
@@ -77,6 +77,24 @@ rem
 echo build 
 rem
 cd ..\source
+
+dotnet clean %solutionName%
+
+dotnet build HtmlImport/HtmlImport.csproj --configuration Debug /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
+if errorlevel 1 (
+   echo failure building MenuCrmBackOffice
+   pause
+   exit /b %errorlevel%
+)
+
+dotnet build aoHtmlImport/aoHtmlImportTool.csproj --configuration Debug /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
+if errorlevel 1 (
+   echo failure building MenuCrmBackOffice
+   pause
+   exit /b %errorlevel%
+)
+
+
 "%msbuildLocation%msbuild.exe" %solutionName%
 if errorlevel 1 (
    echo failure building

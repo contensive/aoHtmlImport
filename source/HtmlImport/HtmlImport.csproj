@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\DataAltController.cs" />
     <Compile Include="Controllers\DataSrcController.cs" />
     <Compile Include="Controllers\DataHrefController.cs" />
     <Compile Include="Controllers\DataAddonController.cs" />
@@ -66,13 +67,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Contensive.CPBaseClass">
-      <Version>21.4.4.1</Version>
+      <Version>21.11.11.1</Version>
     </PackageReference>
     <PackageReference Include="Contensive.DbModels">
-      <Version>21.4.4.1</Version>
+      <Version>21.11.11.1</Version>
     </PackageReference>
     <PackageReference Include="HtmlAgilityPack">
-      <Version>1.11.33</Version>
+      <Version>1.11.38</Version>
     </PackageReference>
     <PackageReference Include="Nustache">
       <Version>1.16.0.10</Version>

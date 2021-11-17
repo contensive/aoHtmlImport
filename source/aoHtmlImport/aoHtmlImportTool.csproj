@@ -67,21 +67,6 @@
     <AssemblyOriginatorKeyFile>htmlImport.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ContensiveDbModels, Version=4.1.2.0, Culture=neutral, PublicKeyToken=c014b235a9c6bb22, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.DbModels.21.4.4.1\lib\net45\ContensiveDbModels.dll</HintPath>
-    </Reference>
-    <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.CPBaseClass.21.4.4.1\lib\net45\CPBase.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.33.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.33\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="Nustache.Core, Version=1.16.0.10, Culture=neutral, PublicKeyToken=efd6f3d8f76ecd9f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nustache.1.16.0.10\lib\net20\Nustache.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PortalFramework, Version=20.9.21.3, Culture=neutral, PublicKeyToken=df99052d01433f97, processorArchitecture=MSIL">
-      <HintPath>..\packages\Contensive.PortalApi.20.12.30.1\lib\net472\PortalFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -116,7 +101,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="htmlImport.snk" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\sampleSql.txt" />
@@ -136,6 +120,20 @@
       <Project>{ba2e9a18-9880-4ea9-b3f7-f502aa9a8077}</Project>
       <Name>HtmlImport</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Contensive.DbModels">
+      <Version>21.11.11.1</Version>
+    </PackageReference>
+    <PackageReference Include="Contensive.PortalApi">
+      <Version>21.11.11.1</Version>
+    </PackageReference>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.11.38</Version>
+    </PackageReference>
+    <PackageReference Include="Nustache">
+      <Version>1.16.0.10</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

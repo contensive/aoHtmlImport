@@ -208,6 +208,16 @@ namespace Contensive.Addons.HtmlImport {
                         indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                         tool.footer += cp.Html5.Div(indent, "ml-4");
                     }
+                    tool.footer += cp.Html5.H5("data-alt");
+                    {
+                        string sample = "";
+                        sample += "<body><image src=\"image.jpg\" data-alt=\"{{photo-alt}}\"></body>";
+                        sample += "\nThe html will have no alt tag. When imported, the alt tag will be {{photo-alt}}.";
+                        string indent = "";
+                        indent += cp.Html5.P("Adds an alt to the current element, replacing what is there if it has one.");
+                        indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                        tool.footer += cp.Html5.Div(indent, "ml-4");
+                    }
                     //
                     tool.footer += cp.Html5.H5("data-addon");
                     {

@@ -324,6 +324,7 @@ namespace Contensive.HtmlImport {
                 DataAddonController.process(cp, htmlDoc);
                 DataHrefController.process(htmlDoc);
                 DataSrcController.process(htmlDoc);
+                DataAltController.process(htmlDoc);
                 //
                 return true;
 
