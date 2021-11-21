@@ -35,7 +35,7 @@ rem -- name of the solution. SHOULD include ao prefix
 set solutionName=aoHtmlImport.sln
 
 rem -- name of the solution. SHOULD include ao prefix
-set binPath=..\source\aoHtmlImport\bin\debug\
+set binPath=..\source\aoHtmlImport\bin\debug\net472\
 
 rem -- name of the solution. SHOULD include ao prefix
 set msbuildLocation=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\
@@ -87,6 +87,8 @@ if errorlevel 1 (
    exit /b %errorlevel%
 )
 
+pause
+
 dotnet build aoHtmlImport/aoHtmlImportTool.csproj --configuration Debug /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
 if errorlevel 1 (
    echo failure building MenuCrmBackOffice
@@ -94,13 +96,8 @@ if errorlevel 1 (
    exit /b %errorlevel%
 )
 
+pause
 
-"%msbuildLocation%msbuild.exe" %solutionName%
-if errorlevel 1 (
-   echo failure building
-   pause
-   exit /b %errorlevel%
-)
 cd ..\scripts
 
 rem pause
@@ -110,11 +107,9 @@ rem
 echo Build addon collection
 rem
 
-rem remove old DLL files from the collection folder
-del "%collectionPath%"\*.DLL
-del "%collectionPath%"\*.config
-
-rem copy bin folder assemblies to collection folder
+rem copy files to collection folder
+copy ..\ui\script.js  "%collectionPath%"
+copy ..\ui\styles.css  "%collectionPath%"
 copy "%binPath%*.dll" "%collectionPath%"
 
 rem create new collection zip file
@@ -124,6 +119,15 @@ del "%collectionName%.zip" /Q
 "c:\program files\7-zip\7z.exe" a "%collectionName%.zip"
 xcopy "%collectionName%.zip" "%deploymentFolderRoot%%versionNumber%" /Y
 cd ..\..\scripts
+
+rem
+echo clean collection folder
+rem
+del "%collectionPath%"\*.dll
+del "%collectionPath%"\*.css
+del "%collectionPath%"\*.js
+
+rem pause
 
 
 rem ==============================================================
@@ -143,3 +147,6 @@ if errorlevel 1 (
 xcopy "Contensive.HtmlImport.%versionNumber%.nupkg" "%NuGetLocalPackagesFolder%" /Y
 xcopy "Contensive.HtmlImport.%versionNumber%.nupkg" "%deploymentFolderRoot%%versionNumber%" /Y
 cd ..\..\scripts
+
+
+

@@ -38,7 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CPBase, Version=4.1.2.0, Culture=neutral, PublicKeyToken=10b3c53389b845fb" />
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -59,16 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\aoHtmlImport\aoHtmlImportTool.csproj">
-      <Project>{2FB04A0F-844C-4010-B011-BE8A90960735}</Project>
-      <Name>aoHtmlImportTool</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlImport\HtmlImport.csproj">
-      <Project>{ba2e9a18-9880-4ea9-b3f7-f502aa9a8077}</Project>
-      <Name>HtmlImport</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack">
       <Version>1.11.38</Version>
     </PackageReference>
@@ -81,6 +70,16 @@
     <PackageReference Include="Nustache">
       <Version>1.16.0.10</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\aoHtmlImport\aoHtmlImportTool.csproj">
+      <Project>{2fb04a0f-844c-4010-b011-be8a90960735}</Project>
+      <Name>aoHtmlImportTool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HtmlImport\HtmlImport.csproj">
+      <Project>{ba2e9a18-9880-4ea9-b3f7-f502aa9a8077}</Project>
+      <Name>HtmlImport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

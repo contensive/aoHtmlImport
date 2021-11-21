@@ -315,16 +315,21 @@ namespace Contensive.HtmlImport {
                 DataLayoutController.process(cp, htmlDoc, ref userMessageList);
                 //
                 // -- process the body
-                DataDeleteController.process(htmlDoc);
-                MustacheVariableController.process(htmlDoc);
                 MustacheSectionController.process(htmlDoc);
-                MustacheTruthyController.process(htmlDoc);
                 MustacheInvertedSectionController.process(htmlDoc);
-                MustacheValueController.process(htmlDoc);
+                MustacheTruthyController.process(htmlDoc);
+                //
+                DataDeleteController.process(htmlDoc);
                 DataAddonController.process(cp, htmlDoc);
                 DataHrefController.process(htmlDoc);
                 DataSrcController.process(htmlDoc);
                 DataAltController.process(htmlDoc);
+                DataValueController.process(htmlDoc);
+                DataInnerTextController.process(htmlDoc);
+                //
+                // -- legacy, not advertized
+                MustacheValueController.process(htmlDoc);
+                MustacheVariableController.process(htmlDoc);
                 //
                 return true;
 

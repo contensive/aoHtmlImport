@@ -3,7 +3,7 @@
 	<HelpLink></HelpLink>
 	<Help></Help>
 	<Addon name="Html Import" guid="{81c8e16a-c661-4c59-921c-998c6acaa6bc}" type="Tool">
-		<DotNetClass><![CDATA[Contensive.Addons.HtmlImport.Views.HtmlImportClass]]></DotNetClass>
+		<DotNetClass><![CDATA[Contensive.Addons.HtmlImport.HtmlImportAddon]]></DotNetClass>
 		<AsAjax>No</AsAjax>
 		<Filter>No</Filter>
 		<Icon Link="" width="50" height="50" sprites="0" />

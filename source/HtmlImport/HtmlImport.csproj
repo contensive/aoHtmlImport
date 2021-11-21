@@ -1,86 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BA2E9A18-9880-4EA9-B3F7-F502AA9A8077}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Contensive.HtmlImport</RootNamespace>
-    <AssemblyName>HtmlImport</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>htmlImport.snk</AssemblyOriginatorKeyFile>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Contensive.CPBaseClass" Version="21.11.11.1" />
+    <PackageReference Include="Contensive.DbModels" Version="21.11.11.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.38" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\ApplicationController.cs" />
-    <Compile Include="Controllers\DataAltController.cs" />
-    <Compile Include="Controllers\DataSrcController.cs" />
-    <Compile Include="Controllers\DataHrefController.cs" />
-    <Compile Include="Controllers\DataAddonController.cs" />
-    <Compile Include="Controllers\DataDeleteController.cs" />
-    <Compile Include="Controllers\DataLayoutController.cs" />
-    <Compile Include="Controllers\genericController.cs" />
-    <Compile Include="Controllers\ImportController.cs" />
-    <Compile Include="Controllers\MustacheInvertedSectionController.cs" />
-    <Compile Include="Controllers\MustacheSectionController.cs" />
-    <Compile Include="Controllers\MustacheTruthyController.cs" />
-    <Compile Include="Controllers\MustacheValueController.cs" />
-    <Compile Include="Controllers\MustacheVariableController.cs" />
-    <Compile Include="Models\ImporttypeEnum.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Contensive.CPBaseClass">
-      <Version>21.11.11.1</Version>
-    </PackageReference>
-    <PackageReference Include="Contensive.DbModels">
-      <Version>21.11.11.1</Version>
-    </PackageReference>
-    <PackageReference Include="HtmlAgilityPack">
-      <Version>1.11.38</Version>
-    </PackageReference>
-    <PackageReference Include="Nustache">
-      <Version>1.16.0.10</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="htmlImport.snk" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

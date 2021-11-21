@@ -19,6 +19,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Debug\HtmlImport.dll" target="lib\net472\HtmlImport.dll" />
+        <file src="bin\Debug\net472\HtmlImport.dll" target="lib\net472\HtmlImport.dll" />
     </files>
 </package>
