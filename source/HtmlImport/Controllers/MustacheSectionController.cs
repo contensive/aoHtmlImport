@@ -45,19 +45,33 @@ namespace Contensive.HtmlImport {
                     // -- data-mustache-section
                     string xPath = "//*[@data-mustache-section]";
                     HtmlNodeCollection nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
-                    if (nodeList != null) {
-                        foreach (HtmlNode node in nodeList) {
-                            var listClone = node.Clone();
-                            string sectionName = node.Attributes["data-mustache-section"].Value;
-                            node.Attributes.Remove("data-mustache-section");
-                            node.ChildNodes.Clear();
-                            node.AppendChild(HtmlNode.CreateNode("{{#" + sectionName + "}}"));
-                            foreach (HtmlNode listChild in listClone.ChildNodes) {
-                                node.AppendChild(listChild);
-                            }
-                            node.AppendChild(HtmlNode.CreateNode("{{/" + sectionName + "}}"));
+                    int loopCnt = 100;
+                    while ((loopCnt-->0) && (nodeList != null)) {
+                        HtmlNode node = nodeList[0];
+                        var listClone = node.Clone();
+                        string sectionName = node.Attributes["data-mustache-section"].Value;
+                        node.Attributes.Remove("data-mustache-section");
+                        node.ChildNodes.Clear();
+                        node.AppendChild(HtmlNode.CreateNode("{{#" + sectionName + "}}"));
+                        foreach (HtmlNode listChild in listClone.ChildNodes) {
+                            node.AppendChild(listChild);
                         }
+                        node.AppendChild(HtmlNode.CreateNode("{{/" + sectionName + "}}"));
+                        nodeList = htmlDoc.DocumentNode.SelectNodes(xPath);
                     }
+                    //if (nodeList != null) {
+                    //    foreach (HtmlNode node in nodeList) {
+                    //        var listClone = node.Clone();
+                    //        string sectionName = node.Attributes["data-mustache-section"].Value;
+                    //        node.Attributes.Remove("data-mustache-section");
+                    //        node.ChildNodes.Clear();
+                    //        node.AppendChild(HtmlNode.CreateNode("{{#" + sectionName + "}}"));
+                    //        foreach (HtmlNode listChild in listClone.ChildNodes) {
+                    //            node.AppendChild(listChild);
+                    //        }
+                    //        node.AppendChild(HtmlNode.CreateNode("{{/" + sectionName + "}}"));
+                    //    }
+                    //}
                 }
             }
         }
