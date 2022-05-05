@@ -110,7 +110,11 @@ namespace Contensive.HtmlImport {
                                         userMessageList.Add("The layout selected could not be found.");
                                         return false;
                                     }
-                                    layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
+                                    if (cp.Site.GetInteger("html platform version") == 5) {
+                                        layout.layoutPlatform5.content = htmlDoc.DocumentNode.OuterHtml;
+                                    } else {
+                                        layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
+                                    }
                                     layout.save(cp);
                                 }
                                 //
@@ -121,7 +125,13 @@ namespace Contensive.HtmlImport {
                                         layout = DbBaseModel.addDefault<LayoutModel>(cp);
                                         layout.name = layoutRecordName;
                                     }
-                                    layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
+                                    //
+                                    // -- check site property, not cp.site.htmlPlatformVersion because this tool runs in the admin site, which may overwrite the public property
+                                    if (cp.Site.GetInteger("html platform version") == 5) {
+                                        layout.layoutPlatform5.content = htmlDoc.DocumentNode.OuterHtml;
+                                    } else {
+                                        layout.layout.content = htmlDoc.DocumentNode.OuterHtml;
+                                    }
                                     layout.save(cp);
                                     userMessageList.Add("Saved Layout '" + layoutRecordName + "'.");
                                 }
