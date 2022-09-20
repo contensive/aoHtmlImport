@@ -87,7 +87,7 @@ if errorlevel 1 (
    exit /b %errorlevel%
 )
 
-pause
+rem pause
 
 dotnet build aoHtmlImport/aoHtmlImportTool.csproj --configuration Debug /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
 if errorlevel 1 (
@@ -96,7 +96,7 @@ if errorlevel 1 (
    exit /b %errorlevel%
 )
 
-pause
+rem pause
 
 cd ..\scripts
 
