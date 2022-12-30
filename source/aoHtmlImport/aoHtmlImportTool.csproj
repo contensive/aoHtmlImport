@@ -12,9 +12,9 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.38" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HtmlImport\HtmlImport.csproj" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <ProjectReference Include="..\HtmlImport\HtmlImport.csproj" />
   </ItemGroup>
 </Project>

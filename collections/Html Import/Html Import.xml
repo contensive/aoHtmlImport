@@ -15,7 +15,7 @@
 		<Content>No</Content>
 		<Template>No</Template>
 		<Email>No</Email>
-		<Admin>No</Admin>
+		<Admin>Yes</Admin>
 		<OnPageEndEvent>No</OnPageEndEvent>
 		<OnPageStartEvent>No</OnPageStartEvent>
 		<OnBodyStart>No</OnBodyStart>
