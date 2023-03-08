@@ -47,7 +47,7 @@ namespace Contensive.Addons.HtmlImport {
                 tool.description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible layouts, templates and addons. See reference at the end of this document.");
                 {
                     var importTypeList = new List<string>() { "Import Destination set in Html File", "Layout For Addon", "Page Template", "Email Template", "Email" };
-                    string editRow = cp.AdminUI.GetEditRow("Select Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, 1, "hiImportTypeid"),
+                    string editRow = cp.AdminUI.GetEditRow("Select Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, cp.Doc.GetInteger("importTypeId"), "hiImportTypeid"),
                         "Select the type of html you are importing.", "");
                     tool.body += cp.Html5.Div(editRow, "", "hiImportType");
                 }
@@ -74,8 +74,10 @@ namespace Contensive.Addons.HtmlImport {
                         "Select the Group, System or Conditional Email you want to populate with this html document. ", "hiSelectEmail");
                     tool.body += cp.Html5.Div(editRow, "", "hiSelectEmailId");
                 }
-
-                tool.body += cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
+                {
+                    string editRow = cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
+                    tool.body += cp.Html5.Div(editRow, "", "hiUploadInput");
+                }
 
                 //
                 tool.footer += cp.Html5.H4("Instructions");
