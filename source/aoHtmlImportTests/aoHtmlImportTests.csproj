@@ -59,13 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack">
-      <Version>1.11.38</Version>
+      <Version>1.11.46</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.2.7</Version>
+      <Version>3.0.2</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>2.2.7</Version>
+      <Version>3.0.2</Version>
     </PackageReference>
     <PackageReference Include="Nustache">
       <Version>1.16.0.10</Version>

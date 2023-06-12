@@ -15,7 +15,7 @@ namespace Contensive.Addons.HtmlImport {
                 //
                 // -- create output form
 
-                var tool = new PortalFramework.ToolSimpleClass();
+                var tool = new PortalFramework.LayoutBuilderSimple();
                 //var form = cp.AdminUI.NewToolForm();
                 if (!string.IsNullOrEmpty(cp.Doc.GetText("button"))) {
                     //
@@ -80,15 +80,15 @@ namespace Contensive.Addons.HtmlImport {
                 }
 
                 //
-                tool.footer += cp.Html5.H4("Instructions");
-                tool.footer += cp.Html5.Div(
+                tool.htmlAfterTable += cp.Html5.H4("Instructions");
+                tool.htmlAfterTable += cp.Html5.Div(
                     cp.Html5.P("Use this tool to upload an html file for use as a page template or layout. Page templates are used for web pages. Layouts are generic records used by add-ons to construct forms.")
                     + cp.Html5.P("Upload an html file to create or update a template or layout from that file. Upload a zip file and the files will be unzipped and all non-html files will be copied to the websites root www directory. All html files wil be imported.")
                     , "ml-4"
                 );
                 //
-                tool.footer += cp.Html5.H5("Import Type");
-                tool.footer += cp.Html5.Div(
+                tool.htmlAfterTable += cp.Html5.H5("Import Type");
+                tool.htmlAfterTable += cp.Html5.Div(
                     cp.Html5.P("Select the type of data being imported. There are two ways to set the destination, html meta tags or select manually.")
                     + cp.Html5.Ol(""
                         + cp.Html5.Li("Meta Tag. Include in your html file a meta tag with name set to either 'layout' or 'template' and content set to the name of the record."
@@ -101,14 +101,14 @@ namespace Contensive.Addons.HtmlImport {
                     , "ml-4"
                 );
                 //
-                tool.footer += cp.Html5.H5("Mustache Properties and Data Properties");
+                tool.htmlAfterTable += cp.Html5.H5("Mustache Properties and Data Properties");
                 {
                     string indent = "";
                     indent += cp.Html5.P("There are two types of replacement properties supported. Data properties modify the html as described. Mustache properties create html that supports Mustache templating. Mustache is a popular templating scheme. You may choose to include mustache tags in your html directly in which case the html may not render well in a browser. You can alternativly choose to set special styles outlined here and the import tool will add the Mustache tags you indicate. Reference any of the many <a href=\"https://mustache.github.io/mustache.5.html\">Mustache references online</a>.");
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-mustache-section");
+                tool.htmlAfterTable += cp.Html5.H5("data-mustache-section");
                 {
                     string sample = "";
                     sample += "<ul data-mustache-section=\"staff\">"
@@ -123,10 +123,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Add a Mustache Section around content to be removed or repeated. If the object property is false, null, or an empty list, the section is removed. If the value is true the section is included. If the value is a list the section is repeated for each item in the list.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-mustache-inverted-section");
+                tool.htmlAfterTable += cp.Html5.H5("data-mustache-inverted-section");
                 {
                     string indent = "";
                     indent += cp.Html5.P("Add a Mustache Inverted Section data attrbiute around content to be included if the object property value is false.");
@@ -142,10 +142,10 @@ namespace Contensive.Addons.HtmlImport {
                             + "\n</div>"
                             + "")
                         + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-body");
+                tool.htmlAfterTable += cp.Html5.H5("data-body");
                 {
                     string sample = "";
                     sample += "<body><span data-body>This content will be included without the span tag</span> and this copy will not be imported</body>";
@@ -153,10 +153,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("The data-body attribute is used to locate the html to be processed. Anything outside of this region will not be processed. If a data-body attribute is found, only the html within that element will be included. If no data-body is used, the content of the entire html body tag is imported.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-layout");
+                tool.htmlAfterTable += cp.Html5.H5("data-layout");
                 {
                     string sample = "";
                     sample += "<body><span data-layout=\"New-Site-Header\">This content will be saved to the layout named 'New-Site-Header' without the span tag</span> and this copy will not be imported. If a tag includes both a data-delete and a data-layout, the innter content will be saved to a layout and deleted from the html.</body>";
@@ -164,10 +164,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("If a data-layout attribute is found, the html within that element will be saved to the named layout record.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-href");
+                tool.htmlAfterTable += cp.Html5.H5("data-href");
                 {
                     string sample = "";
                     sample += "<body><p><a href=\"MainMenu.html\" data-href=\"{{/mainmenu}}\">Click here to see the main menu.</a></p></body>";
@@ -175,10 +175,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Adds an href to the current element, replacing what is there if it has one.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-value");
+                tool.htmlAfterTable += cp.Html5.H5("data-value");
                 {
                     string sample = "";
                     sample += "<p>My example is <span value=\"0\" data-value=\"{{id}}\">content</span>.</p>";
@@ -186,10 +186,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Replace the value of the html tag with the provided value.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-src");
+                tool.htmlAfterTable += cp.Html5.H5("data-src");
                 {
                     string sample = "";
                     sample += "<body><image src=\"placeholder-image.jpg\" data-src=\"{{user-photo}}\"></body>";
@@ -197,9 +197,9 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Adds an src to the current element, replacing what is there if it has one.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
-                tool.footer += cp.Html5.H5("data-alt");
+                tool.htmlAfterTable += cp.Html5.H5("data-alt");
                 {
                     string sample = "";
                     sample += "<body><image src=\"image.jpg\" data-alt=\"{{photo-alt}}\"></body>";
@@ -207,10 +207,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Adds an alt to the current element, replacing what is there if it has one.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-addon");
+                tool.htmlAfterTable += cp.Html5.H5("data-addon");
                 {
                     string sample = "";
                     sample += "<span data-addon=\"content_box\">content</span>";
@@ -218,30 +218,30 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("NOTE: If the addon name contains spaces, replace each space with a _ instead. Ex. content box would be content_box. Replace the inner content of the html tag with the addon after the Mustache Addon tag.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-innertext");
+                tool.htmlAfterTable += cp.Html5.H5("data-innertext");
                 {
                     string sample = "";
                     sample += "<div><span data-innertext=\"{{myMustacheProperty}}\">content</span></div>";
                     sample += "\n<div><span>{{myMustacheProperty}}</span></div>";
                     string indent = "";
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 ////
-                //tool.footer += cp.Html5.H5("data-outertext");
+                //tool.htmlAfterTable += cp.Html5.H5("data-outertext");
                 //{
                 //    string sample = "";
                 //    sample += "<div><span data-outertext=\"{{myMustacheProperty}}\">content</span></div>";
                 //    sample += "\n<div>{{myMustacheProperty}}</div>";
                 //    string indent = "";
                 //    indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                //    tool.footer += cp.Html5.Div(indent, "ml-4");
+                //    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 //}
                 //
-                tool.footer += cp.Html5.H5("data-delete");
+                tool.htmlAfterTable += cp.Html5.H5("data-delete");
                 {
                     string sample = "";
                     sample += "<p>This is in the layout.<span data-delete>This is not.</span></p>";
@@ -249,12 +249,12 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Delete the tag that contains this class, and all child tags.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
                 // legacy, use data-value instead
                 // 
-                tool.footer += cp.Html5.H5("data-mustache-value");
+                tool.htmlAfterTable += cp.Html5.H5("data-mustache-value");
                 {
                     //string sample = "";
                     //sample += "<p>My example is <span value=\"0\" data-mustache-value=\"id\">content</span>.</p>";
@@ -262,10 +262,10 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Legacy. Use data-value instead, adding your own mustache braces.");
                     //indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
                 //
-                tool.footer += cp.Html5.H5("data-mustache-variable");
+                tool.htmlAfterTable += cp.Html5.H5("data-mustache-variable");
                 {
                     //string sample = "";
                     //sample += "<p>My name is <span data-mustache-variable=\"firstName\">Sample Name</span>.</p>";
@@ -273,7 +273,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Legacy, use data-innertext instead.");
                     //indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
-                    tool.footer += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
 
                 tool.addFormButton("Upload");
