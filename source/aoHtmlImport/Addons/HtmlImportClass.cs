@@ -32,8 +32,8 @@ namespace Contensive.Addons.HtmlImport {
                         tool.failMessage = "Upload failed";
                     } else {
                         var userMessageList = new List<string>();
-                        Contensive.HtmlImport.ImporttypeEnum importTypeId = (Contensive.HtmlImport.ImporttypeEnum)cp.Doc.GetInteger("importTypeId");
-                        if (!Contensive.HtmlImport.Controllers.ImportController.processImportFile(cp, uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
+                        var importTypeId = (CPLayoutBaseClass.ImporttypeEnum)cp.Doc.GetInteger("importTypeId");
+                        if (!cp.Layout.processImportFile( uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
                             tool.failMessage = "Error<br><br>" + string.Join("<br>", userMessageList);
                         } else {
                             tool.successMessage = "Success<br><br>" + string.Join("<br>", userMessageList);

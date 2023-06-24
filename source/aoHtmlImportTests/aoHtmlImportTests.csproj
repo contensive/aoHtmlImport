@@ -59,13 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack">
-      <Version>1.11.46</Version>
+      <Version>1.11.48</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
-      <Version>3.0.2</Version>
+      <Version>3.0.4</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework">
-      <Version>3.0.2</Version>
+      <Version>3.0.4</Version>
     </PackageReference>
     <PackageReference Include="Nustache">
       <Version>1.16.0.10</Version>
@@ -75,10 +75,6 @@
     <ProjectReference Include="..\aoHtmlImport\aoHtmlImportTool.csproj">
       <Project>{2fb04a0f-844c-4010-b011-be8a90960735}</Project>
       <Name>aoHtmlImportTool</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HtmlImport\HtmlImport.csproj">
-      <Project>{ba2e9a18-9880-4ea9-b3f7-f502aa9a8077}</Project>
-      <Name>HtmlImport</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
