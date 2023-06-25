@@ -52,7 +52,6 @@
     <Compile Include="Controllers\DataHrefControllerTests.cs" />
     <Compile Include="Controllers\MustacheVariableController_Tests.cs" />
     <Compile Include="Controllers\MustacheTruthyControllerTests.cs" />
-    <Compile Include="Controllers\MustacheInvertedSectionControllerTests.cs" />
     <Compile Include="Controllers\MustacheDeleteControllerTests.cs" />
     <Compile Include="Controllers\MustacheSectionController_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

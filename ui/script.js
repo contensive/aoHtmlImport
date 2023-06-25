@@ -11,27 +11,27 @@ function htmlImportSelect(){
         case "2":
             // -- layout
             $("#hiSelectPageTemplateId,#hiSelectEmailTemplateId,#hiSelectEmailId").hide();
-            $("#hiSelectLayoutId").show();
+            $("#hiSelectLayoutId,#hiSelectLayoutFrameworkId").show();
             break;
         case "3":
             // -- page template
-            $("#hiSelectLayoutId,#hiSelectEmailTemplateId,#hiSelectEmailId").hide();
+            $("#hiSelectLayoutId,#hiSelectEmailTemplateId,#hiSelectEmailId,#hiSelectLayoutFrameworkId").hide();
             $("#hiSelectPageTemplateId").show();
             break;
         case "4":
             // -- email template
-            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailId").hide();
+            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailId,#hiSelectLayoutFrameworkId").hide();
             $("#hiSelectEmailTemplateId").show();
             break;
         case "5":
             // -- email
-            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailTemplateId").hide();
+            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailTemplateId,#hiSelectLayoutFrameworkId").hide();
             $("#hiSelectEmailId").show();
             break;
         default:
             //
             // -- upload has import type(s)
-            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailTemplateId").hide();
+            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailTemplateId,#hiSelectLayoutFrameworkId").hide();
             $("#hiSelectEmail").show();
             break;
     }

@@ -16,7 +16,6 @@ namespace Contensive.Addons.HtmlImport {
                 // -- create output form
 
                 var tool = new PortalFramework.LayoutBuilderSimple();
-                //var form = cp.AdminUI.NewToolForm();
                 if (!string.IsNullOrEmpty(cp.Doc.GetText("button"))) {
                     //
                     // -- process button click
@@ -33,11 +32,19 @@ namespace Contensive.Addons.HtmlImport {
                     } else {
                         var userMessageList = new List<string>();
                         var importTypeId = (CPLayoutBaseClass.ImporttypeEnum)cp.Doc.GetInteger("importTypeId");
+                        //
+                        // -- tmp hack. save platform version, set platform 4/5 based on layout requirement, then restore
+                        // -- long-term, use cp.layout.process with platform argument
+                        int layoutFrameworkSiteSetting = cp.Site.GetInteger("HTML PLATFORM VERSION");
+                        var layoutFrameworkSelected = cp.Doc.GetInteger("layoutFrameworkSelectionId");
+                        if (layoutFrameworkSiteSetting != layoutFrameworkSelected) { cp.Site.SetProperty("HTML PLATFORM VERSION", layoutFrameworkSelected == 2 ? 5 : 4); }
+                        //
                         if (!cp.Layout.processImportFile( uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
                             tool.failMessage = "Error<br><br>" + string.Join("<br>", userMessageList);
                         } else {
                             tool.successMessage = "Success<br><br>" + string.Join("<br>", userMessageList);
                         }
+                        if (layoutFrameworkSiteSetting != layoutFrameworkSelected) { cp.Site.SetProperty("HTML PLATFORM VERSION", layoutFrameworkSiteSetting); }
                     }
                     cp.TempFiles.DeleteFolder(uploadFolderPath);
                 }
@@ -46,44 +53,67 @@ namespace Contensive.Addons.HtmlImport {
                 tool.title = "Html Importer";
                 tool.description = cp.Html5.P("This tool uploads and imports html files and converts the html to Mustache-format compatible layouts, templates and addons. See reference at the end of this document.");
                 {
+                    //
+                    // -- destination
                     var importTypeList = new List<string>() { "Import Destination set in Html File", "Layout For Addon", "Page Template", "Email Template", "Email" };
-                    string editRow = cp.AdminUI.GetEditRow("Select Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, cp.Doc.GetInteger("importTypeId"), "hiImportTypeid"),
+                    string editRow = cp.AdminUI.GetEditRow("Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, cp.Doc.GetInteger("importTypeId"), "hiImportTypeid"),
                         "Select the type of html you are importing.", "");
                     tool.body += cp.Html5.Div(editRow, "", "hiImportType");
                 }
                 {
-                    //form.Body += cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")), "(Optional) Select the Layout you want to populate with this html document. Leave blank if the target is set in a meta tag of the html document.", "hiSelectLayout");
-                    string editRow = cp.AdminUI.GetEditRow("Select Layout", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")),
+                    //
+                    // -- select layout
+                    string editRow = cp.AdminUI.GetEditRow("Layout to Update", cp.AdminUI.GetLookupContentEditor("layoutId", "Layouts", cp.Doc.GetInteger("layoutId")),
                         "Select the Layout you want to populate with this html document.", "hiSelectLayout");
                     tool.body += cp.Html5.Div(editRow, "", "hiSelectLayoutId");
                 }
                 {
-                    string editRow = cp.AdminUI.GetEditRow("Select Page Template", cp.AdminUI.GetLookupContentEditor("pageTemplateId", "Page Templates", cp.Doc.GetInteger("pagetemplateId")),
+                    //
+                    // -- select layout bootstrap 4 or 5
+                    var lookupList = new List<string>() { "default (bootstrap-4)", "bootstrap-5" };
+                    int layoutFrameworkDefault = cp.Site.GetInteger("html platform version", 4);
+                    var layoutFrameworkSelectioned = cp.Doc.GetInteger("layoutFrameworkSelectionId", layoutFrameworkDefault);
+                    int selectionIndex  = layoutFrameworkSelectioned==5 ? 2 : 1;
+                    string editRow = cp.AdminUI.GetEditRow("Layout for Bootstrap 4 or 5", cp.AdminUI.GetLookupListEditor("layoutFrameworkSelectionId", lookupList, selectionIndex, ""),
+                        "Layout records can include html for default (bootswtrap-4) or bootstrap-5. The default layout is used if the site is set to bootstrap-4 or if the bootstrap-5 is blank.", "hiSelectLayout");
+                    tool.body += cp.Html5.Div(editRow, "", "hiSelectLayoutFrameworkId");
+                }
+                {
+                    //
+                    // -- select page template
+                    string editRow = cp.AdminUI.GetEditRow("Page Template to Update", cp.AdminUI.GetLookupContentEditor("pageTemplateId", "Page Templates", cp.Doc.GetInteger("pagetemplateId")),
                         "Select the Page Template you want to populate with this html document. " +
                         "Page templates import just the html body. Head metadata and associated resources have to be manually configured.", "hiSelectPageTemplate");
                     tool.body += cp.Html5.Div(editRow, "", "hiSelectPageTemplateId");
                 }
                 {
-                    string editRow = cp.AdminUI.GetEditRow("Select Email Template", cp.AdminUI.GetLookupContentEditor("emailTemplateId", "Email Templates", cp.Doc.GetInteger("emailtemplateId")),
+                    //
+                    // -- select email template
+                    string editRow = cp.AdminUI.GetEditRow("Email Template to Update", cp.AdminUI.GetLookupContentEditor("emailTemplateId", "Email Templates", cp.Doc.GetInteger("emailtemplateId")),
                         "Select the Email Template you want to populate with this html document. " +
                         "Email templates import the entire html document including the head tag elements. If they are missing the system will create them.", "hiSelectPageTemplate");
                     tool.body += cp.Html5.Div(editRow, "", "hiSelectEmailTemplateId");
                 }
                 {
-                    string editRow = cp.AdminUI.GetEditRow("Select Email", cp.AdminUI.GetLookupContentEditor("emailId", "Email", cp.Doc.GetInteger("emailId")),
+                    //
+                    // -- select email
+                    string editRow = cp.AdminUI.GetEditRow("Email to Update", cp.AdminUI.GetLookupContentEditor("emailId", "Email", cp.Doc.GetInteger("emailId")),
                         "Select the Group, System or Conditional Email you want to populate with this html document. ", "hiSelectEmail");
                     tool.body += cp.Html5.Div(editRow, "", "hiSelectEmailId");
                 }
                 {
-                    string editRow = cp.AdminUI.GetEditRow("Html Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you need to import. The file may include directives the determine the save location and Mustache replacements.");
+                    //
+                    // -- file upload
+                    string editRow = cp.AdminUI.GetEditRow("File Upload", cp.AdminUI.GetFileEditor(uploadFormInputName, ""), "Select the file you want to import. The file may include directives the determine the save location and Mustache replacements.");
                     tool.body += cp.Html5.Div(editRow, "", "hiUploadInput");
                 }
 
                 //
                 tool.htmlAfterTable += cp.Html5.H4("Instructions");
                 tool.htmlAfterTable += cp.Html5.Div(
-                    cp.Html5.P("Use this tool to upload an html file for use as a page template or layout. Page templates are used for web pages. Layouts are generic records used by add-ons to construct forms.")
-                    + cp.Html5.P("Upload an html file to create or update a template or layout from that file. Upload a zip file and the files will be unzipped and all non-html files will be copied to the websites root www directory. All html files wil be imported.")
+                    cp.Html5.P("Use this tool to upload website files like HTML, CSS, and Javascript and to create/update template and layout records. Page templates are records with html content used as the base structure for web pages. Layouts are records with html content used by programs executed within add-ons.")
+                    + cp.Html5.P("<b>Upload a single layout</b> -- Upload an html file, select the layout or template record where it should be saved, and select bootstrap 4 or 5. Only the html &lt;body&gt; content will be saved. If not body tag, the entire files will be used. ")
+                    + cp.Html5.P("<b>Upload layout(s) with asset files</b> -- Create a zip file with html files and asset files like images, Javascript, and CSS. HTML files should include a meta tag that describes the layout or page template (see details below). Asset files and folders will be reproduced in the www folder as they are in the zip file.")
                     , "ml-4"
                 );
                 //

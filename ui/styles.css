@@ -1,13 +1,8 @@
 /* css file created as exported for addon [Html Import], collection [Html Import] in site [app200509] */
-#hiSelectLayoutId {
-    display:none;
-}
-#hiSelectPageTemplateId {
-    display:none;
-}
-#hiSelectEmailTemplateId {
-    display:none;
-}
+#hiSelectLayoutId,
+#hiSelectPageTemplateId,
+#hiSelectEmailTemplateId,
+#hiSelectLayoutFrameworkId,
 #hiSelectEmailId {
     display:none;
 }
