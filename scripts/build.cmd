@@ -72,17 +72,17 @@ md "%deploymentFolderRoot%%versionNumber%"
 rem ==============================================================
 rem
 echo build 
-rem
+rem 
 cd ..\source
 
 dotnet clean %solutionName%
 
-dotnet build HtmlImport/HtmlImport.csproj --configuration Debug /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
-if errorlevel 1 (
-   echo failure building MenuCrmBackOffice
-   pause
-   exit /b %errorlevel%
-)
+rem dotnet build HtmlImport/HtmlImport.csproj --configuration Debug /property:Version=%versionNumber% /property:AssemblyVersion=%versionNumber% /property:FileVersion=%versionNumber%
+rem if errorlevel 1 (
+rem    echo failure building MenuCrmBackOffice
+rem    pause
+rem    exit /b %errorlevel%
+rem )
 
 rem pause
 
@@ -127,23 +127,23 @@ del "%collectionPath%"\*.js
 rem pause
 
 
-rem ==============================================================
-rem
-echo build Nuget
-rem
-cd ..\source\HtmlImport
-IF EXIST "*.nupkg" (
-	del "*.nupkg" /Q
-)
-"nuget.exe" pack "Contensive.HtmlImport.nuspec" -version %versionNumber%
-if errorlevel 1 (
-   echo failure in nuget
-   pause
-   exit /b %errorlevel%
-)
-xcopy "Contensive.HtmlImport.%versionNumber%.nupkg" "%NuGetLocalPackagesFolder%" /Y
-xcopy "Contensive.HtmlImport.%versionNumber%.nupkg" "%deploymentFolderRoot%%versionNumber%" /Y
-cd ..\..\scripts
+rem rem ==============================================================
+rem rem
+rem echo build Nuget
+rem rem
+rem cd ..\source\HtmlImport
+rem IF EXIST "*.nupkg" (
+rem 	del "*.nupkg" /Q
+rem )
+rem "nuget.exe" pack "Contensive.HtmlImport.nuspec" -version %versionNumber%
+rem if errorlevel 1 (
+rem    echo failure in nuget
+rem    pause
+rem    exit /b %errorlevel%
+rem )
+rem xcopy "Contensive.HtmlImport.%versionNumber%.nupkg" "%NuGetLocalPackagesFolder%" /Y
+rem xcopy "Contensive.HtmlImport.%versionNumber%.nupkg" "%deploymentFolderRoot%%versionNumber%" /Y
+rem cd ..\..\scripts
 
 
 
