@@ -39,12 +39,16 @@ namespace Contensive.Addons.HtmlImport {
                         var layoutFrameworkSelected = cp.Doc.GetInteger("layoutFrameworkSelectionId");
                         if (layoutFrameworkSiteSetting != layoutFrameworkSelected) { cp.Site.SetProperty("HTML PLATFORM VERSION", layoutFrameworkSelected == 2 ? 5 : 4); }
                         //
-                        if (!cp.Layout.processImportFile( uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList)) {
+                        bool success = cp.Layout.processImportFile(uploadFolderPath + uploadFile, importTypeId, cp.Doc.GetInteger("layoutId"), cp.Doc.GetInteger("pageTemplateId"), cp.Doc.GetInteger("emailTemplateId"), cp.Doc.GetInteger("emailId"), ref userMessageList);
+                        if (layoutFrameworkSiteSetting != layoutFrameworkSelected) { cp.Site.SetProperty("HTML PLATFORM VERSION", layoutFrameworkSiteSetting); }
+                        if (!success) {
                             tool.failMessage = "Error<br><br>" + string.Join("<br>", userMessageList);
                         } else {
                             tool.successMessage = "Success<br><br>" + string.Join("<br>", userMessageList);
+                            cp.Cache.InvalidateAll();
+                            cp.Response.Redirect(cp.Request.Link);
+                            return "html import success, redirect to refresh page";
                         }
-                        if (layoutFrameworkSiteSetting != layoutFrameworkSelected) { cp.Site.SetProperty("HTML PLATFORM VERSION", layoutFrameworkSiteSetting); }
                     }
                     cp.TempFiles.DeleteFolder(uploadFolderPath);
                 }
@@ -72,8 +76,8 @@ namespace Contensive.Addons.HtmlImport {
                     // -- select layout bootstrap 4 or 5
                     var lookupList = new List<string>() { "default (bootstrap-4)", "bootstrap-5" };
                     int layoutFrameworkDefault = cp.Site.GetInteger("html platform version", 4);
-                    var layoutFrameworkSelectioned = cp.Doc.GetInteger("layoutFrameworkSelectionId", layoutFrameworkDefault);
-                    int selectionIndex  = layoutFrameworkSelectioned==5 ? 2 : 1;
+                    int selectionIndex = cp.Doc.GetInteger("layoutFrameworkSelectionId", layoutFrameworkDefault== 5 ? 2 : 1);
+                    //int selectionIndex  = layoutFrameworkSelected==5 ? 2 : 1;
                     string editRow = cp.AdminUI.GetEditRow("Layout for Bootstrap 4 or 5", cp.AdminUI.GetLookupListEditor("layoutFrameworkSelectionId", lookupList, selectionIndex, ""),
                         "Layout records can include html for default (bootswtrap-4) or bootstrap-5. The default layout is used if the site is set to bootstrap-4 or if the bootstrap-5 is blank.", "hiSelectLayout");
                     tool.body += cp.Html5.Div(editRow, "", "hiSelectLayoutFrameworkId");
@@ -193,6 +197,17 @@ namespace Contensive.Addons.HtmlImport {
                     sample += "\nThis content will be included without the span tag";
                     string indent = "";
                     indent += cp.Html5.P("If a data-layout attribute is found, the html within that element will be saved to the named layout record.");
+                    indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
+                    tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
+                }
+                //
+                tool.htmlAfterTable += cp.Html5.H5("data-cdn");
+                {
+                    string sample = "";
+                    sample += "<body><div><img data-cdn=\"src\" src=\"/img/sample.png\"></div></body>";
+                    sample += "\nWhen imported, the image in src will be copied to the cdn data source, and the html will be updated to target the cdn version.";
+                    string indent = "";
+                    indent += cp.Html5.P("Set data-cdn to an attribute in the html tag, like src, and the file in the url will be copied to the cdn and the html will be updated.");
                     indent += "<pre>" + cp.Utils.EncodeHTML(sample) + "</pre>";
                     tool.htmlAfterTable += cp.Html5.Div(indent, "ml-4");
                 }
