@@ -46,7 +46,8 @@ namespace Contensive.Addons.HtmlImport {
                         } else {
                             tool.successMessage = "Success<br><br>" + string.Join("<br>", userMessageList);
                             cp.Cache.InvalidateAll();
-                            cp.Response.Redirect(cp.Request.Link);
+                            string refreshUrl = cp.Utils.ModifyLinkQueryString(cp.Request.Link, cp.Utils.GetRandomString(10), cp.Utils.GetRandomString(10));
+                            cp.Response.Redirect(refreshUrl);
                             return "html import success, redirect to refresh page";
                         }
                     }
