@@ -33,6 +33,18 @@
 			<p>My name is <span data-mustache-addon="contentbox">Sample Name</span>.</p>
 		</div>
 	</div>
+	<div  data-layout="Example-Layout-1">
+		<p>Sample text in layout 1</p>
+	</div>
+	<div  data-layout="Example-Layout-2">
+		<p>Sample text in layout 2</p>
+	</div>
+	<div data-innertext="{{myMustacheProperty}}">
+		<p>this copy will get replaced with the innertext</p>
+	</div>
+	<div   data-layout="Example-Layout-2" data-innertext='{% "addon name" %}'>
+		<p>this copy will get saved to the layout and then be replaced with the innertext</p>
+	</div>
 
 </body>
 </html>
