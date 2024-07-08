@@ -47,6 +47,9 @@ namespace Contensive.Addons.HtmlImport {
                             tool.successMessage = "Success<br><br>" + string.Join("<br>", userMessageList);
                             cp.Cache.InvalidateAll();
                             string refreshUrl = cp.Utils.ModifyLinkQueryString(cp.Request.Link, cp.Utils.GetRandomString(10), cp.Utils.GetRandomString(10));
+                            refreshUrl = cp.Utils.ModifyLinkQueryString(refreshUrl, "importTypeId", cp.Doc.GetInteger("importTypeId"));
+                            refreshUrl = cp.Utils.ModifyLinkQueryString(refreshUrl, "layoutFrameworkSelectionId", cp.Doc.GetInteger("layoutFrameworkSelectionId"));
+                            refreshUrl = cp.Utils.ModifyLinkQueryString(refreshUrl, "layoutId", cp.Doc.GetInteger("layoutId"));
                             cp.Response.Redirect(refreshUrl);
                             return "html import success, redirect to refresh page";
                         }
