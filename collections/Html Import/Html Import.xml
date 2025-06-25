@@ -42,10 +42,4 @@
 	</Layout>
 	<Resource name="script.js" type="www" path="htmlImport" />
 	<Resource name="styles.css" type="www" path="/htmlImport" />
-	<Resource name="CPBase.dll" type="executable" path="" />
-	<Resource name="ContensiveDbModels.dll" type="executable" path="" />
-	<Resource name="HtmlAgilityPack.dll" type="executable" path="" />
-	<Resource name="HtmlImport.dll" type="executable" path="" />
-	<Resource name="Newtonsoft.Json.dll" type="executable" path="" />
-	<Resource name="Nustache.Core.dll" type="executable" path="" />
 </Collection>
