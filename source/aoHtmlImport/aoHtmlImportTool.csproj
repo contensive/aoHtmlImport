@@ -6,8 +6,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Contensive.CPBaseClass" Version="25.5.29.5" />
-    <PackageReference Include="Contensive.DbModels" Version="25.5.29.5" />
+    <PackageReference Include="Contensive.CPBaseClass" Version="25.7.18.3" />
+    <PackageReference Include="Contensive.DbModels" Version="25.7.18.3" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.48" />
   </ItemGroup>
   <ItemGroup>
