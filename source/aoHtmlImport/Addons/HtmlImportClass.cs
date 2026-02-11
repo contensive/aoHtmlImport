@@ -49,8 +49,9 @@ namespace Contensive.Addons.HtmlImport {
                             refreshUrl = cp.Utils.ModifyLinkQueryString(refreshUrl, "importTypeId", cp.Doc.GetInteger("importTypeId"));
                             refreshUrl = cp.Utils.ModifyLinkQueryString(refreshUrl, "layoutFrameworkSelectionId", cp.Doc.GetInteger("layoutFrameworkSelectionId"));
                             refreshUrl = cp.Utils.ModifyLinkQueryString(refreshUrl, "layoutId", cp.Doc.GetInteger("layoutId"));
-                            cp.Response.Redirect(refreshUrl);
-                            return "html import success, redirect to refresh page";
+                            // redirect blocks the success message and blocks prepopulation
+                            //cp.Response.Redirect(refreshUrl);
+                            //return "html import success, redirect to refresh page";
                         }
                     }
                     cp.TempFiles.DeleteFolder(uploadFolderPath);
