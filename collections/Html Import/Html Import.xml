@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Html Import" guid="{aa255960-cf4d-4a6e-a792-89a3d499a98f}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid="">
+<Collection name="Html Import" guid="{aa255960-cf4d-4a6e-a792-89a3d499a98f}" system="No" updatable="Yes" blockNavigatorNode="No" onInstallAddonGuid=""
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://contensive.s3.amazonaws.com/xsd/Collection.xsd"
+>
 	<HelpLink></HelpLink>
 	<Help></Help>
 	<Addon name="Html Import" guid="{81c8e16a-c661-4c59-921c-998c6acaa6bc}" type="Tool">
