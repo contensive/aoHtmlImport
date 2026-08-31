@@ -64,7 +64,7 @@ namespace Contensive.Addons.HtmlImport {
                     //
                     // -- destination
                     var importTypeList = new List<string>() { "Import Destination set in Html File", "Layout For Addon", "Page Template", "Email Template", "Email" };
-                    string editRow = cp.AdminUI.GetEditRow("Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, cp.Doc.GetInteger("importTypeId"), "hiImportTypeid"),
+                    string editRow = cp.AdminUI.GetEditRow("Import Type", cp.AdminUI.GetLookupListEditor("importTypeId", importTypeList, cp.Doc.GetInteger("importTypeId", 1), "hiImportTypeid"),
                         "Select the type of html you are importing.", "");
                     tool.body += cp.Html5.Div(editRow, "", "hiImportType");
                 }
