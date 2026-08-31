@@ -1,12 +1,10 @@
 // javascript file create as exported for addon [Html Import], collection [Html Import] in site [app200509]
 $(function(){
-    console.log("html import ready");
     $("#hiImportTypeid").on("change",htmlImportSelect);
     htmlImportSelect();
 })
 function htmlImportSelect(){
     var importTypeId = $('#hiImportTypeid').find(":selected").val();
-    console.log("html htmlImportSelect [" + importTypeId + "]");
     switch(importTypeId) {
         case "2":
             // -- layout
@@ -30,9 +28,8 @@ function htmlImportSelect(){
             break;
         default:
             //
-            // -- upload has import type(s)
-            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailTemplateId,#hiSelectLayoutFrameworkId").hide();
-            $("#hiSelectEmail").show();
+            // -- import destination set in html file, hide all selectors
+            $("#hiSelectLayoutId,#hiSelectPageTemplateId,#hiSelectEmailTemplateId,#hiSelectLayoutFrameworkId,#hiSelectEmailId").hide();
             break;
     }
 }

@@ -122,7 +122,7 @@ namespace Contensive.Addons.HtmlImport {
                     cp.Html5.P("Use this tool to upload website files like HTML, CSS, and Javascript and to create/update template and layout records. Page templates are records with html content used as the base structure for web pages. Layouts are records with html content used by programs executed within add-ons.")
                     + cp.Html5.P("<b>Upload a single layout</b> -- Upload an html file, select the layout or template record where it should be saved, and select bootstrap 4 or 5. Only the html &lt;body&gt; content will be saved. If not body tag, the entire files will be used. ")
                     + cp.Html5.P("<b>Upload layout(s) with asset files</b> -- Create a zip file with html files and asset files like images, Javascript, and CSS. HTML files should include a meta tag that describes the layout or page template (see details below). Asset files and folders will be reproduced in the www folder as they are in the zip file.")
-                    , "ml-4"
+                    , "ms-4"
                 );
                 //
                 tool.htmlAfterBody += cp.Html5.H5("Import Type");
@@ -136,14 +136,14 @@ namespace Contensive.Addons.HtmlImport {
                         + "")
                         + cp.Html5.Li("Manual Select. Select the template and/or layout on this form and the html will be saved to a record with the same name as the uploaded file.")
                     )
-                    , "ml-4"
+                    , "ms-4"
                 );
                 //
                 tool.htmlAfterBody += cp.Html5.H5("Mustache Properties and Data Properties");
                 {
                     string indent = "";
                     indent += cp.Html5.P("There are two types of replacement properties supported. Data properties modify the html as described. Mustache properties create html that supports Mustache templating. Mustache is a popular templating scheme. You may choose to include mustache tags in your html directly in which case the html may not render well in a browser. You can alternativly choose to set special styles outlined here and the import tool will add the Mustache tags you indicate. Reference any of the many <a href=\"https://mustache.github.io/mustache.5.html\">Mustache references online</a>.");
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-mustache-section");
@@ -161,7 +161,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Add a Mustache Section around content to be removed or repeated. If the object property is false, null, or an empty list, the section is removed. If the value is true the section is included. If the value is a list the section is repeated for each item in the list.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-mustache-inverted-section");
@@ -180,7 +180,7 @@ namespace Contensive.Addons.HtmlImport {
                             + "\n</div>"
                             + "")
                         + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-body");
@@ -191,7 +191,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("The data-body attribute is used to locate the html to be processed. Anything outside of this region will not be processed. If a data-body attribute is found, only the html within that element will be included. If no data-body is used, the content of the entire html body tag is imported.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-layout");
@@ -202,7 +202,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("If a data-layout attribute is found, the html within that element will be saved to the named layout record.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-cdn");
@@ -213,7 +213,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Set data-cdn to an attribute in the html tag, like src, and the file in the url will be copied to the cdn and the html will be updated.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-href");
@@ -224,7 +224,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Adds an href to the current element, replacing what is there if it has one.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-value");
@@ -235,7 +235,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Replace the value of the html tag with the provided value.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-src");
@@ -246,7 +246,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Adds an src to the current element, replacing what is there if it has one.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 tool.htmlAfterBody += cp.Html5.H5("data-alt");
                 {
@@ -256,7 +256,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Adds an alt to the current element, replacing what is there if it has one.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-addon");
@@ -267,7 +267,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("NOTE: If the addon name contains spaces, replace each space with a _ instead. Ex. content box would be content_box. Replace the inner content of the html tag with the addon after the Mustache Addon tag.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-innertext");
@@ -277,7 +277,7 @@ namespace Contensive.Addons.HtmlImport {
                     sample += "\n<div><span>{{myMustacheProperty}}</span></div>";
                     string indent = "";
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 ////
                 //tool.htmlAfterBody += cp.Html5.H5("data-outertext");
@@ -287,7 +287,7 @@ namespace Contensive.Addons.HtmlImport {
                 //    sample += "\n<div>{{myMustacheProperty}}</div>";
                 //    string indent = "";
                 //    indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                //    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                //    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 //}
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-delete");
@@ -298,7 +298,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Delete the tag that contains this class, and all child tags.");
                     indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 // legacy, use data-value instead
@@ -311,7 +311,7 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Legacy. Use data-value instead, adding your own mustache braces.");
                     //indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
                 //
                 tool.htmlAfterBody += cp.Html5.H5("data-mustache-variable");
@@ -322,17 +322,15 @@ namespace Contensive.Addons.HtmlImport {
                     string indent = "";
                     indent += cp.Html5.P("Legacy, use data-innertext instead.");
                     //indent += "<div>" + cp.Utils.EncodeHTML(sample) + "</div>";
-                    tool.htmlAfterBody += cp.Html5.Div(indent, "ml-4");
+                    tool.htmlAfterBody += cp.Html5.Div(indent, "ms-4");
                 }
 
                 tool.addFormButton("Upload");
                 tool.addFormButton("Cancel");
                 return tool.getHtml();
             } catch (Exception ex) {
-                //
-                // -- the execute method should typically not throw an error into the consuming method. Log and return.
                 cp.Site.ErrorReport(ex);
-                throw;
+                return "There was an error executing this addon.";
             }
         }
     }

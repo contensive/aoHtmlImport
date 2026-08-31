@@ -28,21 +28,20 @@
 		<ProcessRunOnce>No</ProcessRunOnce>
 		<ProcessInterval>0</ProcessInterval>
 		<styleslinkhref><![CDATA[/htmlImport/styles.css]]></styleslinkhref>
-		<Scripting Language="VBScript" EntryPoint="" Timeout="5000"/>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
 	</Addon>
 	<Layout name="Html Import" guid="{d682f552-fdec-4e25-a160-705c3381428d}" ><![CDATA[
 		<div class="">
 		<h2>Html Import</h2>
 		<p>Upload html file.</p>
-		<div class="custom-file">
-		<input type="file" class="custom-file-input" id="customFile">
-			<label class="custom-file-label" for="customFile">Choose file</label>
+		<div class="mb-3">
+		<input type="file" class="form-control" id="customFile">
+			<label class="form-label" for="customFile">Choose file</label>
 		</div>
 		<div class="">
 		<button class="btn btn-primary" type="submit" name="button">Upload Html File</button>
 		</div>
 		</div>]]>
 	</Layout>
-	<Resource name="script.js" type="www" path="htmlImport" />
-	<Resource name="styles.css" type="www" path="/htmlImport" />
+	<Resource name="wwwFiles.zip" type="wwwFiles" />
 </Collection>
