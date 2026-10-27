@@ -14,7 +14,7 @@ Import-Module (Join-Path $PSScriptRoot '..\..\Contensive5\scripts\build-addon-co
 $projectRoot = (Resolve-Path "$PSScriptRoot\..").Path
 
 # Display build info
-$version = Get-ContensiveVersion -DeploymentRoot 'C:\Deployments\aoHtmlImport'
+$version = Get-ContensiveVersion -DeploymentRoot 'C:\Deployments\aoHtmlImport' -RepoPath $projectRoot
 Write-Host ""
 Write-Host "========================================"
 Write-Host "  aoHtmlImport Build"
